@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from rango.forms import UserForm, UserProfileForm
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-<<<<<<< HEAD
 def index(request):
     context_dict = {}
     return render(request, 'SnoutPage/index.html', context = context_dict)
@@ -84,4 +82,5 @@ def user_login(request):
 
     else:
         return render(request, 'SnoutPage/login.html', {})
->>>>>>> b5493857d8568bd6cff38f690775892906b53c8f
+
+
