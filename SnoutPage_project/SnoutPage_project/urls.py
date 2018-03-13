@@ -13,12 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
 from SnoutPage import views
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-	url(r'^$', views.index, name='index')
+    url(r'^$', views.index, name='index'),
+    url(r'^index/', views.index, name = 'index'),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^logout/$', views.user_logout, name ='logout'),
+    url(r'^register/$',views.register, name = 'register'),
+   # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
 ]

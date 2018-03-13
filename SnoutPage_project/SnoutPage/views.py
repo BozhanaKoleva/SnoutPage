@@ -1,8 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render,redirect
+from django.http import HttpResponse,HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from SnoutPage.forms import UserForm, UserProfileForm
+#from SnoutPage import Friend
 
 def index(request):
     context_dict = {}
@@ -41,7 +43,7 @@ def register(request):
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
-            return HttpResponseRedirect(reverse('userPage'))
+            return HttpResponseRedirect(reverse('index'))# change to userPage when userPage completed
         else:
             # Invalid form or forms 
             # Print problems to the terminal.
@@ -83,4 +85,6 @@ def user_login(request):
     else:
         return render(request, 'SnoutPage/login.html', {})
 
-
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
