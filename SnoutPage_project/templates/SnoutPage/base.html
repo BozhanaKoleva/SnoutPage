@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 {% load staticfiles%}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}}
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+
+
+
 
 <html lang="en">
 <head>
@@ -19,6 +26,9 @@
 <body>
 
 
+
+
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -27,7 +37,10 @@
 	<ul class="nav navbar-nav">
       <li class="active"><a href="#">Categories</a></li>
 	</ul>
-    
+     {% if user.is_authenticated %}
+	 <a href ="{% url 'logout' %}">Logout</a>
+	<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" width ="50" height ="50">
+	 {% endif %}
     <form class="navbar-form navbar-left" action="/action_page.php">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" name="search">
@@ -65,7 +78,7 @@
 							<div class="col-md-12">
 								Login via
 								<div class="social-buttons">
-									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+								<a href="{% provider_login_url 'facebook' method='oauth2' next='http://127.0.0.1:8000/#_=_' %}"Login with Facebook class = "btn btn-fb"><i class ="fa fa-facebook"></i>Facebook</a> <!-- change next value after hosting on python anywhere -->
 								</div>
                                 or
 								 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
@@ -85,7 +98,7 @@
 								 </form>
 							</div>
 							<div class="bottom text-center">
-								Don't have an account?  <a href="#"><b>Register</b></a>
+								Don't have an account?  <a href="{% url 'register' %}"><b>Register</b></a>
 							</div>
 					 </div>
 				</li>
