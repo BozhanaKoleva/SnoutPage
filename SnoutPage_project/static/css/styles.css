@@ -2,7 +2,7 @@
 	height: 60px;
 	margin-top: -20px;
 	}
-	
+/* ------------------------------------------------------------login style */
 #login-dp{
     min-width: 250px;
     padding: 14px 14px 0;
@@ -43,4 +43,18 @@
         background-color: inherit;
         border-top:0 none;
     }
+
 }
+.navbar-brand{
+height:50px;
+margin-left: -15px;
+}
+#search{
+	width: 400px;
+}
+
+#userpic{
+	top:15px;
+	right:15px;
+}
+	

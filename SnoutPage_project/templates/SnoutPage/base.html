@@ -41,7 +41,18 @@
  
  
  {% if user.is_authenticated %}
- 
+    <ul class="nav navbar-nav navbar-right">
+	<li>
+		
+	<span class="glyphicon glyphicon-user" id = "userpic"></span>          <!--placeholder for User profile pic -->
+	<li><a href == "#">User Profile</a></li> <!-- Link to user profile-->
+    <li class="dropdown">
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Notifications</b> <span class="caret"></span></a> <!-- temp, might remove-->
+        </li>
+	<li>
+		<a href = "#"> Logout</a></li> <!-- Link to Logout page-->
+		
+      </ul>
  
  {% else %}
   <ul class="nav navbar-nav navbar-right">
@@ -81,11 +92,11 @@
 			</ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-	{% endif %}
+
+    </div>
   </div><!-- /.container-fluid -->
-  
 </nav>
+{% endif %}
 {% block body_block %}
 
 {% endblock %}
