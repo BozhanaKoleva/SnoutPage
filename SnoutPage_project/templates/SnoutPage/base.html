@@ -29,11 +29,12 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href=""><img class = "img-rounded" id = "logo" src="{% static "images/logo.png" %}" </a>
+      <a id = "logoLink"class="navbar-brand" href="{% url 'index' %}"><img class = "img-rounded" id = "logo" src="{% static "images/logo.png" %}" </a>
     </div>
 	<ul class="nav navbar-nav">
       <li class="active"><a href="#">Categories</a></li>
 	</ul>
+	
     <form class="navbar-form navbar-left" action="/action_page.php">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" name="search">
@@ -49,7 +50,7 @@
  {% if user.is_authenticated %}
     <ul class="nav navbar-nav navbar-right">
 		<li>
-			<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" width ="50" height ="50"> </li>
+			<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-rounded" id = "userAvatar"> </li>
 		<li><a href == "#">User Profile</a></li> <!-- Link to user profile-->
 		<li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Notifications</b> <span class="caret"></span></a> <!-- temp, might remove-->
