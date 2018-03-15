@@ -59,32 +59,69 @@ def register(request):
         {'user_form': user_form,
         'profile_form': profile_form,
         'registered': registered})
-            
 
 def user_login(request):
-    # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(username=username, password=password)
-
         if user:
-            # Is the account active? It could have been disabled.
             if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect(reverse('index'))
-            
+                return HttpResponseRedirect('/SnoutPage/')
+            else:
+                return HttpResponse("Your account is disabled.")
         else:
-            # Bad login details were provided
-            print("Invalid login details: {0}, {1}".format(username, password))
+            print ("Invalid login details: {0}, {1}").format(username, password)
             return HttpResponse("Invalid login details supplied.")
-
     else:
         return render(request, 'SnoutPage/login.html', {})
-
+        
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+def show_category(request, category_name_slug):
+    # Create a context dictionary that we can pass
+    # to the template rendering engine.
+    context_dict = {}
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+        pages = Page.objects.filter(category=category)
+        context_dict['pages'] = pages
+        context_dict['category'] = category
+       
+    except Category.DoesNotExist:
+        context_dict['category'] = None
+        context_dict['pages'] = None
+        context_dict['query'] = category.name
+        result_list = []
+        if request.method == 'POST':
+            query = request.POST['query'].strip()
+            if query:
+                result_list = run_query(query)
+                context_dict['query'] = query
+                context_dict['result_list'] = result_list
+          
+    return render(request, 'SnoutPage/category.html', context_dict)
+
+## create search.html, 
+
+
+##def search(request):
+##    context = RequestContext(request)
+##
+##    cat_list = get_category_list()
+##    context_dict = {}
+##    context_dict['cat_list'] = cat_list
+##
+##    result_list = []
+##
+##    if request.method == 'POST':
+##        query = request.POST['query'].strip()
+##
+##        if query:
+##            result_list = run_query(query)
+##
+##    context_dict['result_list'] = result_list
+##    return render_to_response('SnoutPage/search.html', context_dict, context)
