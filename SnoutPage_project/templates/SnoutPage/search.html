@@ -1,37 +1,48 @@
 {% extends "SnoutPage/base.html" %}
 
-{% load static %}
+
+{% load staticfiles %}
 
 {% block title %}Search{% endblock %}
 
 {% block body_block %}
-<div class="hero-unit">
-	<h1>Search the Web</h1>
-	<br/>
 
-	<div class="container-fluid">
-		<form class="span8 form-search" id="search_form" method="post" action="/rango/search/">
-			{% csrf_token %}
-			<!-- Display the search form elements here -->
-            <input type="text" class="input-long search-query"  name="query" value="" id="query" />
-            <button type="submit" class="btn btn-success" name="submit" value="Search">Search</button>
+    <div class="page-header">
+        <h1>Search</h1>
+    </div>
 
-		</form>
-	</div>
-	
-	<div class="container-fluid">
-		
-		{% if result_list %}
-		<!-- Display search results in an ordered list -->
-		<ol>
-		{% for result in result_list %}
-			<li>
-				<strong><a href="{{ result.link }}">{{ result.title }}</a></strong><br />
-				<p>{{ result.summary }}</p>
-			</li>
-		{% endfor %}
-		</ol>
-		{% endif %}
-	</div>
+    <div class="row">
+
+        <div class="panel panel-primary">
+            <br/>
+
+            <form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
+                {% csrf_token %}
+                <!-- Display the search form elements here -->
+                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
+                <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+                <br />
+            </form>
+
+            <div class="panel">
+                {% if result_list %}
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Results</h3>
+                    <!-- Display search results in an ordered list -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {% for result in result_list %}
+                                <div class="list-group-item">
+                                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a></h4>
+                                    <p class="list-group-item-text">{{ result.summary }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+    </div>
 </div>
 {% endblock %}
+	
