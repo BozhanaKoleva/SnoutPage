@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from SnoutPage.forms import UserForm, UserProfileForm
+<<<<<<< HEAD
+=======
+from django.template.defaultfilters import slugify
+>>>>>>> dab75305c1c5c9288ffb1bbb740fcd0391ecd672
 #from SnoutPage import Friend
 
 def index(request):
@@ -106,6 +110,7 @@ def show_category(request, category_name_slug):
           
     return render(request, 'SnoutPage/category.html', context_dict)
 
+<<<<<<< HEAD
 ## create search.html, 
 
 
@@ -126,3 +131,39 @@ def show_category(request, category_name_slug):
 ##
 ##    context_dict['result_list'] = result_list
 ##    return render_to_response('SnoutPage/search.html', context_dict, context)
+=======
+
+def add_page(request, category_name_slug):
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        category = None
+
+    form = PageForm()
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            if category:
+                page = form.save(commit=False)
+                page.category = category
+                page.views = 0
+                page.save()
+                # probably better to use a redirect here.
+            return show_category(request, category_name_slug)
+        else:
+            print(form.errors)
+
+    context_dict = {'form':form, 'category': category}
+
+    return render(request, 'rango/add_page.html', context_dict)
+    
+
+
+def search(request):
+
+    result_list = []
+
+    return render(request, 'SnoutPage/base.html', {'result_list': result_list})
+
+
+>>>>>>> dab75305c1c5c9288ffb1bbb740fcd0391ecd672

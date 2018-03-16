@@ -15,7 +15,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category) 
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=300, blank=True)
-    comments = models.CharField(max_length=300, default=0)
+    ## comments = models.CharField(max_length=300, default=0)
     tags = models.CharField(max_length=30, blank=True)
     picture = models.ImageField(upload_to='post_images', blank=True) 
     likes = models.IntegerField(default=0) 
@@ -24,7 +24,37 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+class PostLike(models.Model):
+    user = models.ForeignKey('auth.User')
+    post = models.ForeignKey(Post)
+    def __str__(self):
+        return self.user.username
+    
+class Comment(models.Model):
+    post = models.ForeignKey(Post)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    description = models.CharField(max_length=300, blank=False)
+    created_date = models.DateTimeField(default=timezone.now)
+    ##likes = models.IntegerField(default=0)
+    def __str__(self):
+        return self.description
 
+class Pet(models.Model):
+    user = models.ForeignKey('auth.User')
+    name = models.CharField(max_length=18, unique=False)
+    picture = models.ImageField(upload_to='pet_profile_images',blank=True)
+    description = models.CharField(max_length=600, blank=True)
+    def __str__(self):
+        return self.name
+    
+class Page(models.Model):
+    category = models.ForeignKey(Category)
+    title = models.CharField(max_length=128)
+    url = models.URLField()
+    views = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.title
 
 from django.contrib.auth.models import User
 
