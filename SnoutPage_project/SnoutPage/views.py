@@ -1,13 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout,login
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from SnoutPage.forms import UserForm, UserProfileForm
-<<<<<<< HEAD
-=======
 from django.template.defaultfilters import slugify
->>>>>>> dab75305c1c5c9288ffb1bbb740fcd0391ecd672
 #from SnoutPage import Friend
 
 def index(request):
@@ -66,20 +63,22 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
+        #username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
+        user = authenticate(username='Luke', password=password)
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/SnoutPage/')
+                print 'user logged in'
+                return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Your account is disabled.")
         else:
             print ("Invalid login details: {0}, {1}").format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'SnoutPage/login.html', {})
+       return render(request, 'SnoutPage/index.html',{})
         
 def user_logout(request):
     logout(request)
@@ -110,28 +109,7 @@ def show_category(request, category_name_slug):
           
     return render(request, 'SnoutPage/category.html', context_dict)
 
-<<<<<<< HEAD
-## create search.html, 
 
-
-##def search(request):
-##    context = RequestContext(request)
-##
-##    cat_list = get_category_list()
-##    context_dict = {}
-##    context_dict['cat_list'] = cat_list
-##
-##    result_list = []
-##
-##    if request.method == 'POST':
-##        query = request.POST['query'].strip()
-##
-##        if query:
-##            result_list = run_query(query)
-##
-##    context_dict['result_list'] = result_list
-##    return render_to_response('SnoutPage/search.html', context_dict, context)
-=======
 
 def add_page(request, category_name_slug):
     try:
@@ -166,4 +144,3 @@ def search(request):
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
 
->>>>>>> dab75305c1c5c9288ffb1bbb740fcd0391ecd672
