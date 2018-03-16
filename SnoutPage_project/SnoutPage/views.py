@@ -93,7 +93,8 @@ def show_category(request, category_name_slug):
        
     except Category.DoesNotExist:
         context_dict['category'] = None
-        context_dict['pages'] = None
+        context_dict['pages'] = None
+
         context_dict['query'] = category.name
         result_list = []
         if request.method == 'POST':
