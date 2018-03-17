@@ -139,4 +139,4 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 # django allauth variable
 SITE_ID=1
 
-LOGIN_REDIRECT_URL = 'SnoutPage/index.html'
+LOGIN_REDIRECT_URL = 'index'
