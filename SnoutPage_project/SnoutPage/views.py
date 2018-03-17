@@ -143,4 +143,10 @@ def search(request):
 
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
+def user_page(request):
 
+    description =""
+    friend_list=[]
+    pet_list=[]
+
+    return render(request, 'SnoutPage/user_page.html',{})

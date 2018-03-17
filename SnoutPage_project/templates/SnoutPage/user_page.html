@@ -1,0 +1,26 @@
+{% extends 'SnoutPage/base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+
+
+
+
+
+
+<h3> User Page </h3>
+Hello {{user.username}}
+
+<ul>
+	<li> <a href = "#" >Add friend </a></li>
+	<li> <a href = "#" >Edit pets </a></li>
+	<li> <a href = "#" >Edit User </a></li>
+	<li> <a href = "#" >Add pet </a></li>
+</ul>
+
+Description box here
+
+List of pets(links)
+
+List of friends(links)
+{% endblock %}

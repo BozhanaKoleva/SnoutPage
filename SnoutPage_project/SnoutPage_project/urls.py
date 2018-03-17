@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^login/$', views.user_login, name = 'index'),
     url(r'^register/$',views.register, name = 'register'),
     url(r'^search/$',views.search, name = 'search'),
+    url(r'^user_page/$',views.user_page, name= 'user_page'),
    # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
 ]
