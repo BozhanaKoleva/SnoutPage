@@ -63,10 +63,10 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        #username = request.POST.get('username')
+        #email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username='Luke', password=password)
+        user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
