@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout,login
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from SnoutPage.forms import UserForm, UserProfileForm
@@ -63,20 +63,22 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
+        #username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
+        user = authenticate(username='Luke', password=password)
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/SnoutPage/')
+                print 'user logged in'
+                return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Your account is disabled.")
         else:
             print ("Invalid login details: {0}, {1}").format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'SnoutPage/login.html', {})
+       return render(request, 'SnoutPage/index.html',{})
         
 def user_logout(request):
     logout(request)
@@ -106,6 +108,7 @@ def show_category(request, category_name_slug):
                 context_dict['result_list'] = result_list
           
     return render(request, 'SnoutPage/category.html', context_dict)
+
 
 
 def add_page(request, category_name_slug):
