@@ -33,8 +33,10 @@ def register(request):
             
             
             profile = profile_form.save(commit=False)
-            profile.user = user
-            
+            #profile.user = user # removed as it was causing max recursion error- trying to figure out how to fix
+
+            new_user = authenticate(username = user_form.cleaned_data['username'],password=user+form.cleaned_data['password'],)
+            login(request, new_user)
             # If the user provided a profile picture, we need to get it from the input form and
             #put it in the UserProfile model.
             if 'picture' in request.FILES:
@@ -149,3 +151,17 @@ def user_page(request):
     pet_list=[]
 
     return render(request, 'SnoutPage/user_page.html',{})
+def pet(request):
+    return render(request, 'SnoutPage/pet.html',{})
+
+def edit_pet(request):
+    return render(request,'SnoutPage/edit_pet.html',{})
+
+def category_list(request):
+    return render(request, 'SnoutPage/category_list.html',{})
+
+def add_pet(request):
+    return render(request, 'SnoutPage/add_pet.html',{})
+
+def edit_user(request):
+    return render(request,'SnoutPage/edit_user.html',{})

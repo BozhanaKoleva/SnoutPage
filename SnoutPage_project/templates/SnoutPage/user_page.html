@@ -9,18 +9,23 @@
 
 
 <h3> User Page </h3>
-Hello {{user.username}}
+Hello {{user.username}}!
+<br />
 
+These will appear only if the user is looking at their own page:
 <ul>
-	<li> <a href = "#" >Add friend </a></li>
-	<li> <a href = "#" >Edit pets </a></li>
-	<li> <a href = "#" >Edit User </a></li>
-	<li> <a href = "#" >Add pet </a></li>
+	<li> <a href = "{% url 'edit_pet' %}" >Edit pets </a></li>
+	<li> <a href = "{% url 'edit_user' %}" >Edit User </a></li>
+	<li> <a href = "{% url 'add_pet' %}" >Add pet </a></li>
 </ul>
 
-Description box here
+These will appear if the user is looking at their own, or another's page:
+<ul>
+<li><a href = "#" >Add friend </a></li>
 
-List of pets(links)
+<li>Description box here</li>
 
-List of friends(links)
+<li>List of pets(links)</li>
+
+<li>List of friends(links)</li>
 {% endblock %}
