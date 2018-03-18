@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from SnoutPage.models import UserProfile
+from SnoutPage.models import UserProfile, Pet, Comment, Page, Post
 
 
 class UserForm(forms.ModelForm):
@@ -15,20 +15,6 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('picture',)
         
-class PostForm(forms.ModelForm):
-    title = forms.CharField(max_length=default,
-    help_text="Please enter the title of the post.")
-    description = forms.CharField(max_length=300, blank=True,
-    help_text="Please enter the description of the post.")
-    tags = forms.CharField (max_length=30, blank=True,
-    help_text="Add a tag.")
-    picture = forms.ImageField(upload_to='post_images', blank=True)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    class Meta:
-        model = Post
-        fields = ('title', 'description', 'tags', 'picture',)
-
-        
 class PetForm(forms.ModelForm):
     class Meta:
         model = Pet
@@ -37,14 +23,18 @@ class PetForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('description')
+        fields = ('description',)
 
 class PageForm(forms.ModelForm):
-    title = forms.CharField(max_length=default,
+    title = forms.CharField(max_length=128,
     help_text="Please enter the title of the page.")
     url = forms.URLField(max_length=200,
     help_text="Please enter the URL of the page.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+
+    class Meta:
+        model = Page
+        fields = ('title', 'url', 'views')
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -55,6 +45,16 @@ class PageForm(forms.ModelForm):
             cleaned_data['url'] = url
             return cleaned_data
 
+class PostForm(forms.ModelForm):
+    title = forms.CharField(max_length=128,
+    help_text="Please enter the title of the post.")
+    description = forms.CharField(max_length=300,
+    help_text="Please enter the description of the post.")
+    tags = forms.CharField (max_length=30,
+    help_text="Add a tag.")
+    picture = forms.ImageField()
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
-        model = Page
-        fields = ('title', 'url', 'views')
+        model = Post
+        fields = ('title', 'description', 'tags', 'picture',)
+   

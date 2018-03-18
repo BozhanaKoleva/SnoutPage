@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, logout,login
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.forms import UserForm, UserProfileForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, PageForm
 from django.template.defaultfilters import slugify
 #from SnoutPage import Friend
 
@@ -135,7 +135,6 @@ def add_page(request, category_name_slug):
 
     return render(request, 'rango/add_page.html', context_dict)
     
-
 
 def search(request):
 
