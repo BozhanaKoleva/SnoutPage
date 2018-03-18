@@ -43,12 +43,17 @@ $(document).ready( function() {
 {% block body_block %}
 
 {% if registered %}
-You're already registered!
-<a href = "{% url 'index' %}"> Return to homepage</a>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>You are already registered!</h1>
+    <p><a href = "{% url 'index' %}"> Return to homepage</a></p>
+  </div>
+</div>
 {% else %}
 
 	<body>
-		<div class="container">
+		<div class="container" id = "register-body">
 			<div class="row main">
 				<div class="panel-heading">
 	               <div class="panel-title text-center">
@@ -67,7 +72,7 @@ You're already registered!
 					
 					
 					
-						<div class="form-group">
+						<div class="form-group" id = "mobilefix">
 							<label for="username" class="cols-sm-2 control-label">Username</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
@@ -77,7 +82,7 @@ You're already registered!
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group" id = "mobilefix">
 							<label for="email" class="cols-sm-2 control-label">Your Email</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
@@ -89,7 +94,7 @@ You're already registered!
 
 						
 
-						<div data-toggle="tooltip" title="Required" class="form-group">
+						<div data-toggle="tooltip" title="Required" class="form-group" id= "mobilefix">
 							<label for="password" class="cols-sm-2 control-label">Password</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
@@ -100,7 +105,7 @@ You're already registered!
 						</div>
 
 						
-						<div id = "img-up-container" class="container">
+						<div  id = "mobilefix" class="container">
 							<div class="cols-sm-10">
 								<div class="form-group">
 									<label>Upload Image</label>
