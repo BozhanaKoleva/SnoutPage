@@ -145,6 +145,45 @@ def add_page(request):
     context_dict = {'form':form}
 
     return render(request, 'SnoutPage/add_pet.html', context_dict)
+
+def add_pet(request):
+    form = PetForm()
+    if request.method == 'POST':
+        form = PetForm(request.POST)
+        if form.is_valid():
+            pet = form.save(commit=False)
+            pet.owner = self.request.user
+            pet.save()
+        else:
+            print(form.errors)
+            
+    context_dict = {'form':form}
+
+    return render(request, 'SnoutPage/add_pet.html', context_dict)
+
+
+def add_post(request, pet_name_slug):
+    try:
+        pet = Pet.objects.get(slug=pet_name_slug)
+    except Pet.DoesNotExist:
+        pet = None
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            if pet:
+                post = form.save(commit=False)
+                post.author = self.request.user
+                post.likes = 0
+                post.category = pet.category
+                post.save()
+            return show_pet(request, pet_name_slug)    
+        else:
+            print(form.errors)
+            
+    context_dict = {'form':form, 'pet': pet}
+
+    return render(request, 'SnoutPage/add_post.html', context_dict)
     
 
 def search(request):

@@ -1,27 +1,68 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 from django.utils import timezone
+from django.template.defaultfilters import slugify
+from SnoutPage.types import *
+
 
 # A draft for models
 
-class Category(models.Model):
-    name = models.CharField(max_length=18, unique=True) 
-    class Meta:
-        verbose_name_plural = 'Categories'
-        def __str__(self):
-            return self.name
+##class Category(models.Model):
+##    name = models.CharField(max_length=18, unique=True) 
+##    class Meta:
+##        verbose_name_plural = 'Categories'
+##        def __str__(self):
+##            return self.name
+##
+##class Page(models.Model):
+##    category = models.ForeignKey(Category)
+##    title = models.CharField(max_length=128)
+##    url = models.URLField()
+##    views = models.IntegerField(default=0)
+##    
+##    def __str__(self):
+##        return self.title
+
+class UserProfile(models.Model):
+
+    user = models.ManyToManyField(User) ## probably incorrect
+    picture = models.ImageField(upload_to='profile_images',blank=True)
+    friends = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+        
+
+class Pet(models.Model):
+    slug = models.SlugField(unique=True, default=None)
+    category = models.CharField(max_length=6, choices=TYPES, default="DOG")
+    user = models.ForeignKey('auth.User')
+    name = models.CharField(max_length=18, unique=True)
+    picture = models.ImageField(upload_to='pet_profile_images',blank=True)
+    description = models.CharField(max_length=600, blank=True)
+    def __str__(self):
+        return self.name
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Post, self).save(*args, **kwargs)
 
 class Post(models.Model):
-    ##pet = models.ForeignKey(Pet)
-    category = models.ForeignKey(Category) 
-    title = models.CharField(max_length=128)
+    slug = models.SlugField(unique=True, default=None)
+    category = models.CharField(max_length=6, choices=TYPES, default="DOG")
+    title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=300, blank=True)
     ## comments = models.CharField(max_length=300, default=0)
     tags = models.CharField(max_length=30, blank=True)
     picture = models.ImageField(upload_to='post_images', blank=True) 
-    likes = models.IntegerField(default=0) 
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    pet = models.ForeignKey(Pet, default=None)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+    
     def __str__(self):
         return self.title
 
@@ -40,35 +81,15 @@ class Comment(models.Model):
     def __str__(self):
         return self.description
 
-class Pet(models.Model):
-    user = models.ForeignKey('auth.User')
-    name = models.CharField(max_length=18, unique=False)
-    picture = models.ImageField(upload_to='pet_profile_images',blank=True)
-    description = models.CharField(max_length=600, blank=True)
-    def __str__(self):
-        return self.name
-    
-class Page(models.Model):
-    category = models.ForeignKey(Category)
-    title = models.CharField(max_length=128)
-    url = models.URLField()
-    views = models.IntegerField(default=0)
-    
-    def __str__(self):
-        return self.title
 
-from django.contrib.auth.models import User
+    
+
+
+
 
 # Create your models here.
 
-class UserProfile(models.Model):
 
-    user = models.ManyToManyField(User) ## probably incorrect
-    picture = models.ImageField(upload_to='profile_images',blank=True)
-    friends = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.user.username
 
 
 ##class Friend(models.Model):

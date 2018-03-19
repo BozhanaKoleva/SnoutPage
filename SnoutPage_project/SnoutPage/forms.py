@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from SnoutPage.models import UserProfile, Pet, Comment, Page, Post
+from SnoutPage.models import UserProfile, Pet, Comment,  Post #Page
+from SnoutPage.types import *
+
 from django.contrib.auth.forms import UserChangeForm
 
 
@@ -17,13 +19,13 @@ class UserProfileForm(forms.ModelForm):
         fields = ('picture',)
         
 class PetForm(forms.ModelForm):
+    category = forms.ChoiceField(choices = TYPES, label="", initial='', widget=forms.Select(), )
     name = forms.CharField(max_length=128)
 ##    picture = forms.ImageField
     description = forms.CharField(max_length=600)
-    
     class Meta:
         model = Pet
-        fields = ('name', 'picture', 'description')
+        fields = ('category', 'name', 'picture', 'description')
 
 class CommentForm(forms.ModelForm):
     class Meta:
