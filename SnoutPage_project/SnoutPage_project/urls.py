@@ -34,6 +34,6 @@ urlpatterns = [
     url(r'^category_list/$', views.category_list, name='category_list'),
     url(r'^add_pet/$', views.add_page, name ='add_pet'),
     url(r'^edit_user/$',views.edit_user, name='edit_user'),
-    url(r'^change-password/$',views.change_password, name='change_password'),
+    url(r'^password/$',views.change_password, name='change_password'),
    # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
 ]
