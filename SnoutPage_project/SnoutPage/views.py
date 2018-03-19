@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.forms import UserForm, UserProfileForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, PageForm
 from django.template.defaultfilters import slugify
 #from SnoutPage import Friend
 
@@ -33,8 +33,10 @@ def register(request):
             
             
             profile = profile_form.save(commit=False)
-            profile.user = user
-            
+            #profile.user = user # removed as it was causing max recursion error- trying to figure out how to fix
+
+            new_user = authenticate(username = user_form.cleaned_data['username'],password=user+form.cleaned_data['password'],)
+            login(request, new_user)
             # If the user provided a profile picture, we need to get it from the input form and
             #put it in the UserProfile model.
             if 'picture' in request.FILES:
@@ -63,13 +65,24 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
+<<<<<<< HEAD
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
+=======
+        #email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
+<<<<<<< HEAD
                 return HttpResponseRedirect('/SnoutPage/')
+=======
+                print( 'user logged in')
+                return HttpResponseRedirect(reverse('index'))
+>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
             else:
                 return HttpResponse("Your account is disabled.")
         else:
@@ -133,11 +146,30 @@ def add_page(request, category_name_slug):
     return render(request, 'SnoutPage/add_page.html', context_dict)
     
 
-
 def search(request):
 
     result_list = []
 
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
+def user_page(request):
 
+    description =""
+    friend_list=[]
+    pet_list=[]
+
+    return render(request, 'SnoutPage/user_page.html',{})
+def pet(request):
+    return render(request, 'SnoutPage/pet.html',{})
+
+def edit_pet(request):
+    return render(request,'SnoutPage/edit_pet.html',{})
+
+def category_list(request):
+    return render(request, 'SnoutPage/category_list.html',{})
+
+def add_pet(request):
+    return render(request, 'SnoutPage/add_pet.html',{})
+
+def edit_user(request):
+    return render(request,'SnoutPage/edit_user.html',{})

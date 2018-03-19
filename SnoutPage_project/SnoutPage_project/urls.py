@@ -19,7 +19,7 @@ from SnoutPage import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.index, name = 'index'),
     url(r'^index/', views.index, name = 'index'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^logout/$', views.user_logout, name ='logout'),
@@ -28,5 +28,11 @@ urlpatterns = [
     url(r'^login/$', views.user_login, name = 'index'),
     url(r'^register/$',views.register, name = 'register'),
     url(r'^search/$',views.search, name = 'search'),
+    url(r'^user_page/$',views.user_page, name= 'user_page'),
+    url(r'^pet/$',views.pet, name='pet'),
+    url(r'^edit_pet/$', views.edit_pet, name='edit_pet'),
+    url(r'^category_list/$', views.category_list, name='category_list'),
+    url(r'^add_pet/$', views.add_pet, name ='add_pet'),
+    url(r'^edit_user/$',views.edit_user, name='edit_user'),
    # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
 ]
