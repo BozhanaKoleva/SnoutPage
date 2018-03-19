@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, PageForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm
 from django.template.defaultfilters import slugify
 #from SnoutPage import Friend
 
@@ -121,29 +121,29 @@ def show_category(request, category_name_slug):
     return render(request, 'SnoutPage/category.html', context_dict)
 
 
-def add_page(request, category_name_slug):
-    try:
-        category = Category.objects.get(slug=category_name_slug)
-    except Category.DoesNotExist:
-        category = None
+def add_page(request):
+##    try:
+##        category = Category.objects.get(slug=category_name_slug)
+##    except Category.DoesNotExist:
+##        category = None
+##
+    form = PetForm()
+##    if request.method == 'POST':
+##        form = PageForm(request.POST)
+##        if form.is_valid():
+##            if category:
+##                page = form.save(commit=False)
+##                page.category = category
+##                page.views = 0
+##                page.save()
+##                # probably better to use a redirect here.
+##            return show_category(request, category_name_slug)
+##        else:
+##            print(form.errors)
 
-    form = PageForm()
-    if request.method == 'POST':
-        form = PageForm(request.POST)
-        if form.is_valid():
-            if category:
-                page = form.save(commit=False)
-                page.category = category
-                page.views = 0
-                page.save()
-                # probably better to use a redirect here.
-            return show_category(request, category_name_slug)
-        else:
-            print(form.errors)
+    context_dict = {'form':form}
 
-    context_dict = {'form':form, 'category': category}
-
-    return render(request, 'SnoutPage/add_page.html', context_dict)
+    return render(request, 'SnoutPage/add_pet.html', context_dict)
     
 
 def search(request):
@@ -168,8 +168,8 @@ def edit_pet(request):
 def category_list(request):
     return render(request, 'SnoutPage/category_list.html',{})
 
-def add_pet(request):
-    return render(request, 'SnoutPage/add_pet.html',{})
+##def add_pet(request):
+##    return render(request, 'SnoutPage/add_pet.html',{})
 
 def edit_user(request):
     return render(request,'SnoutPage/edit_user.html',{})

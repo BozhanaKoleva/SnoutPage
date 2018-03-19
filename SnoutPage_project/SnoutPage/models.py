@@ -12,6 +12,7 @@ class Category(models.Model):
             return self.name
 
 class Post(models.Model):
+    ##pet = models.ForeignKey(Pet)
     category = models.ForeignKey(Category) 
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=300, blank=True)
