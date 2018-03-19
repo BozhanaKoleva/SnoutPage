@@ -35,7 +35,7 @@ def register(request):
             profile = profile_form.save(commit=False)
             #profile.user = user # removed as it was causing max recursion error- trying to figure out how to fix
 
-            new_user = authenticate(username = user_form.cleaned_data['username'],password=user+form.cleaned_data['password'],)
+            new_user = authenticate(username = user_form.cleaned_data['username'],password=user_form.cleaned_data['password'],)
             login(request, new_user)
             # If the user provided a profile picture, we need to get it from the input form and
             #put it in the UserProfile model.
@@ -65,24 +65,24 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-<<<<<<< HEAD
+# HEAD
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-=======
+#=======
         #email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
->>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
+#>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
-<<<<<<< HEAD
-                return HttpResponseRedirect('/SnoutPage/')
-=======
+#<<<<<<< HEAD
+                return HttpResponseRedirect('/index/')
+#=======
                 print( 'user logged in')
                 return HttpResponseRedirect(reverse('index'))
->>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
+#>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
             else:
                 return HttpResponse("Your account is disabled.")
         else:
