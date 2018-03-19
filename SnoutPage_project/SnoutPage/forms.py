@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from SnoutPage.models import UserProfile, Pet, Comment, Page, Post
+from django.contrib.auth.forms import UserChangeForm
 
 
 class UserForm(forms.ModelForm):
@@ -61,4 +62,13 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'description', 'tags', 'picture',)
+
+class EditUserForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('email','first_name','last_name')
+        exclude=('password',)
+    def __init__self(sell, *args, **kwargs):
+        super(EditUserForm,self).__init__(*args, **kwargs)
+        self.fields['password'].help_text=None
    

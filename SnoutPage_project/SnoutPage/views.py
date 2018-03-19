@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm
 from django.template.defaultfilters import slugify
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.models import User
 #from SnoutPage import Friend
 
 def index(request):
@@ -46,7 +48,7 @@ def register(request):
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
-            return HttpResponseRedirect(reverse('index'))# change to userPage when userPage completed
+            return HttpResponseRedirect('/index/')# change to userPage when userPage completed
         else:
             # Invalid form or forms 
             # Print problems to the terminal.
@@ -78,10 +80,9 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
 #<<<<<<< HEAD
-                return HttpResponseRedirect('/index/')
 #=======
                 print( 'user logged in')
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect('/index/')
 #>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
             else:
                 return HttpResponse("Your account is disabled.")
@@ -93,7 +94,7 @@ def user_login(request):
         
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect('/index/')
 
 def show_category(request, category_name_slug):
     # Create a context dictionary that we can pass
@@ -172,4 +173,27 @@ def category_list(request):
 ##    return render(request, 'SnoutPage/add_pet.html',{})
 
 def edit_user(request):
-    return render(request,'SnoutPage/edit_user.html',{})
+    if request.method=='POST':
+        form = PasswordChangeForm(request.POST,instance =request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('user_page')
+    else:
+        form = EditUserForm(instance = request.user)
+        context_dict ={'form':form}
+        return render(request, 'SnoutPage/edit_user.html',context_dict)
+
+def change_password(request):
+    if request.method=='POST':
+        form = PasswordChangeForm(data=request.POST,user =request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request,form.user)
+            return redirect('user_page')
+        else:
+            return redirect('/change-password/')
+    else:
+        form = PasswordChangeForm(user=request.user)
+        context_dict = {'form':form}
+    
+        return render(request,'SnoutPage/change-password.html',context_dict)
