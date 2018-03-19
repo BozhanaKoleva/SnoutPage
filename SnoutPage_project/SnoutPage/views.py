@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from django.contrib.auth import authenticate, logout,login
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from SnoutPage.forms import UserForm, UserProfileForm
@@ -63,22 +63,20 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        #username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username='Luke', password=password)
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
-                print 'user logged in'
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect('/SnoutPage/')
             else:
                 return HttpResponse("Your account is disabled.")
         else:
             print ("Invalid login details: {0}, {1}").format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
-       return render(request, 'SnoutPage/index.html',{})
+        return render(request, 'SnoutPage/login.html', {})
         
 def user_logout(request):
     logout(request)
@@ -110,7 +108,6 @@ def show_category(request, category_name_slug):
     return render(request, 'SnoutPage/category.html', context_dict)
 
 
-
 def add_page(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -133,7 +130,7 @@ def add_page(request, category_name_slug):
 
     context_dict = {'form':form, 'category': category}
 
-    return render(request, 'rango/add_page.html', context_dict)
+    return render(request, 'SnoutPage/add_page.html', context_dict)
     
 
 
