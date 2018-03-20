@@ -25,7 +25,7 @@ from SnoutPage.types import *
 
 class UserProfile(models.Model):
 
-    user = models.ManyToManyField(User) ## probably incorrect
+    user = models.OneToOneField(User,null=True)
     picture = models.ImageField(upload_to='profile_images',blank=True)
     friends = models.IntegerField(default=0)
 
