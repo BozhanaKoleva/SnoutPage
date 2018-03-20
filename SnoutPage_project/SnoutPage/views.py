@@ -66,13 +66,13 @@ def register(request):
         'registered': registered})
 
 def user_login(request):
-    print 'auda'
+    print ('auda')
     if request.method == 'POST':
 
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
 
-        print 'username, password' + username + password
+        print ('username, password' + username + password)
         #email = request.POST.get('email')
 ##        username = request.POST.get('username')
 ##        password = request.POST.get('password')
