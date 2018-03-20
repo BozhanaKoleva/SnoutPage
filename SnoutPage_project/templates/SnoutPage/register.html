@@ -42,7 +42,7 @@ $(document).ready( function() {
 </head>
 {% block body_block %}
 
-{% if registered %}
+{% if user.is_authenticated %}
 
 <div class="container">
   <div class="jumbotron">

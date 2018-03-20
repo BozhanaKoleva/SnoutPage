@@ -17,6 +17,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Alegreya Sans SC' rel='stylesheet'>
   
   <link rel="stylesheet" href={% static "css/styles.css" %}>
   
@@ -72,7 +73,7 @@
 								<a href="{% provider_login_url 'facebook' method='oauth2' next='http://127.0.0.1:8000/#_=_' %}"Login with Facebook class = "btn btn-fb"><i class ="fa fa-facebook"></i>Facebook</a> <!-- change next value after hosting on python anywhere -->
 								</div>
                                 or
-								 <form class="form" role="form" method="post" action="{% url 'login' %}" accept-charset="UTF-8" id="login-nav">
+								 <form class="form" role="form" method="post" action="{% url 'index' %}" accept-charset="UTF-8" id="login-nav">
 										
 										<div class="form-group">
 										{% csrf_token %}

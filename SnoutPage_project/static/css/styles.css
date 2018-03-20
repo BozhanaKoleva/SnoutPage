@@ -1,3 +1,7 @@
+body {
+    font-family: 'Alegreya Sans SC';
+}
+
 #logo{
 	height: 60px;
 	margin-top: -20px;
@@ -104,10 +108,81 @@ margin-left: -15px;
 
 #user-page-top{
 	margin-top:55px;
+	display: table;
+	height:263px;
+    width: 100%;
 }
 
 #user-page-avatar{
-	height:300px;
-	margin-left:30px;
+	height:200px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
 	padding:10px;
+
+}
+#user-page-username{
+	text-align:center;
+	text-transform: capitalize;
+}
+
+.tab-content{
+	display: table; 
+    width: 100%;
+	height:289px;
+	overflow:auto;
+	margin-top:5px;
+	
+}
+
+#description-panel{	
+	padding:10px;
+	height:inherit;	
+}
+#friends-tab{
+	height:263px;;
+}
+
+#user-page-top-content{
+	 display: table-cell;
+}
+
+.scrollable-panel{
+    max-height:240px;
+    overflow: auto;
+}
+
+
+
+img {
+  border: 0 none;
+  display: inline-block;
+  height: 50px;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.list-content{
+ min-height:240px;
+}
+.list-content .list-group .title{
+  background:#5bc0de;
+  border:2px solid #DDDDDD;
+  font-weight:bold;
+  color:#FFFFFF;
+}
+.list-group-item img {
+    height:80px; 
+    width:80px;
+}
+
+
+.name {
+    color:#5bc0de;    
+}
+
+#friend-list-buttons{
+	top:-25px;
+	right: -770px;
 }
