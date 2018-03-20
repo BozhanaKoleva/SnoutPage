@@ -67,30 +67,27 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-# HEAD
+
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-#=======
+
         #email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
-#>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
+
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
-#<<<<<<< HEAD
-#=======
                 print( 'user logged in')
                 return HttpResponseRedirect('/index/')
-#>>>>>>> 7e4a6d3589ce35462abac546c1bf6d2550c07f2a
+
             else:
                 return HttpResponse("Your account is disabled.")
         else:
-            print ("Invalid login details: {0}, {1}").format(username, password)
+            print ("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
-    else:
-        return render(request, 'SnoutPage/login.html', {})
+    return render(request, {})
         
 def user_logout(request):
     logout(request)
