@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -124,6 +124,70 @@ def show_category(request, category_name_slug):
           
     return render(request, 'SnoutPage/category.html', context_dict)
 
+def pet(request, pet_name_slug):
+    context_dict = {}
+    try:
+        pet = Pet.objects.get(slug=pet_name_slug)
+        posts = Post.objects.filter(pet=pet)
+        context_dict['posts'] = posts
+        context_dict['owner'] = owner
+        context_dict['name'] = name
+        context_dict['category'] = category
+        context_dict['picture'] = picture
+        context_dict['description'] = description
+    except Pet.DoesNotExist:
+        context_dict['posts'] = None
+        context_dict['owner'] = None
+        context_dict['name'] = None
+        context_dict['category'] = None
+        context_dict['picture'] = None
+        context_dict['description'] = None
+        
+    return render(request, 'SnoutPage/pet.html', context_dict)
+
+def post(request, post_name_slug):
+    context_dict = {}
+    try:
+        post = Post.objects.get(slug=post_name_slug)
+        liked_by_user = PostLike.objects.filter(post=post, liked = True, user = self.request.user)
+        if liked_by_user:
+            #context_dict['message'] = "you have liked this post!"
+            context_dict['form'] = None
+        else:
+            form = PostLikeForm(request.POST or None)
+            #context_dict['message'] = "like this post if you like it!"
+            context_dict['form'] = form
+            if form.is_valid():
+                postlike = form.save(commit=False)
+                postlike.user = self.request.user
+                postLike.post = post
+                postLike.save()
+            else:
+                print(form.errors)
+            
+        comments = Comment.objects.filter(post=post)
+        likes = PostLike.objects.filter(post=post, liked = True).count()
+        context_dict['likes'] = likes
+        context_dict['comments'] = comments
+        context_dict['category'] = category
+        context_dict['title'] = title
+        context_dict['description'] = description
+        context_dict['tag'] = tag
+        context_dict['author'] = author
+        context_dict['created_date'] = created_date
+    except Post.DoesNotExist:
+        context_dict['likes'] = None
+        context_dict['comments'] = None
+        context_dict['category'] = None
+        context_dict['title'] = None
+        context_dict['description'] = None
+        context_dict['tag'] = None
+        context_dict['author'] = None
+        context_dict['created_date'] = None
+        
+        
+    return render(request, 'SnoutPage/post.html', context_dict)
+
 
 def add_page(request):
 ##    try:
@@ -177,7 +241,6 @@ def add_post(request, pet_name_slug):
             if pet:
                 post = form.save(commit=False)
                 post.author = self.request.user
-                post.likes = 0
                 post.category = pet.category
                 post.save()
             return show_pet(request, pet_name_slug)    
@@ -202,8 +265,6 @@ def user_page(request):
     pet_list=[]
 
     return render(request, 'SnoutPage/user_page.html',{})
-def pet(request):
-    return render(request, 'SnoutPage/pet.html',{})
 
 def edit_pet(request):
     return render(request,'SnoutPage/edit_pet.html',{})

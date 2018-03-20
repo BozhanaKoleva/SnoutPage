@@ -36,25 +36,23 @@ class UserProfile(models.Model):
 class Pet(models.Model):
     slug = models.SlugField(unique=True, default=None)
     category = models.CharField(max_length=6, choices=TYPES, default="DOG")
-    user = models.ForeignKey('auth.User')
-    name = models.CharField(max_length=18, unique=True)
+    owner = models.ForeignKey(User)
+    name = models.CharField(max_length=120, unique=True)
     picture = models.ImageField(upload_to='pet_profile_images',blank=True)
     description = models.CharField(max_length=600, blank=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Post, self).save(*args, **kwargs)
+        super(Pet, self).save(*args, **kwargs)
 
 class Post(models.Model):
     slug = models.SlugField(unique=True, default=None)
     category = models.CharField(max_length=6, choices=TYPES, default="DOG")
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=300, blank=True)
-    ## comments = models.CharField(max_length=300, default=0)
-    tags = models.CharField(max_length=30, blank=True)
+    tag = models.CharField(max_length=30, blank=True)
     picture = models.ImageField(upload_to='post_images', blank=True) 
-    likes = models.IntegerField(default=0)
     pet = models.ForeignKey(Pet, default=None)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
@@ -67,7 +65,8 @@ class Post(models.Model):
         return self.title
 
 class PostLike(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(User)
+    liked = models.BooleanField(default=False)
     post = models.ForeignKey(Post)
     def __str__(self):
         return self.user.username

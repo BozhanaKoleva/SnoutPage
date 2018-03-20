@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from SnoutPage.models import UserProfile, Pet, Comment,  Post #Page
+from SnoutPage.models import UserProfile, Pet, Comment,  Post, PostLike #Page
 from SnoutPage.types import *
 
 from django.contrib.auth.forms import UserChangeForm
@@ -19,13 +19,13 @@ class UserProfileForm(forms.ModelForm):
         fields = ('picture',)
         
 class PetForm(forms.ModelForm):
-    category = forms.ChoiceField(choices = TYPES, label="", initial='', widget=forms.Select(), )
-    name = forms.CharField(max_length=128)
+##    category = forms.ChoiceField(choices = TYPES, label="", initial='', widget=forms.Select(), )
+##    name = forms.CharField(max_length=128)
 ##    picture = forms.ImageField
-    description = forms.CharField(max_length=600)
+##    description = forms.CharField(max_length=600)
     class Meta:
         model = Pet
-        fields = ('category', 'name', 'picture', 'description')
+        fields = ('category', 'name','description', 'picture')
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -53,17 +53,22 @@ class CommentForm(forms.ModelForm):
 ##            return cleaned_data
 
 class PostForm(forms.ModelForm):
-    title = forms.CharField(max_length=128,
-    help_text="Please enter the title of the post.")
-    description = forms.CharField(max_length=300,
-    help_text="Please enter the description of the post.")
-    tags = forms.CharField (max_length=30,
-    help_text="Add a tag.")
-    picture = forms.ImageField()
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+##    title = forms.CharField(max_length=128,
+##    help_text="Please enter the title of the post.")
+##    description = forms.CharField(max_length=300,
+##    help_text="Please enter the description of the post.")
+##    tags = forms.CharField (max_length=30,
+##    help_text="Add a tag.")
+##    picture = forms.ImageField()
+##    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
         model = Post
-        fields = ('title', 'description', 'tags', 'picture',)
+        fields = ('title', 'description', 'tag', 'picture',)
+
+class PostLikeForm(forms.ModelForm):
+    class Meta:
+        model = PostLike
+        fields = ('liked', )
 
 class EditUserForm(UserChangeForm):
     class Meta:
