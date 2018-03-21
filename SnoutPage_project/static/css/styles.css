@@ -122,13 +122,13 @@ margin-left: -15px;
 #user-page-username{
 	text-align:center;
 	text-transform: capitalize;
-	height:200px;
+	height:0px;
 }
 
 .tab-content{
 	display: table; 
     width: 100%;
-	height:289px;
+	height:293px;
 	overflow:auto;
 	margin-top:5px;
 	
@@ -144,6 +144,7 @@ margin-left: -15px;
 
 #user-page-top-content{
 	 display: table-cell;
+	 
 }
 
 .scrollable-panel{
@@ -198,6 +199,14 @@ img {
 #after-header{
 	margin-top:50px;
 	overflow:auto;
+}
+#user-page-avatarr{
+	height:200px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+	padding:10px;
 }
 
 

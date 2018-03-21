@@ -278,7 +278,9 @@ def user_page(request):
     friend_list=[]
     user = request.user
     pets = Pet.objects.filter(owner=user)
+    pet_number = pets.count()
     context_dict = {}
+    context_dict['pet_number'] = pet_number
     context_dict['pets'] = pets
     context_dict['userdata'] = userdata
     return render(request, 'SnoutPage/user_page.html',context_dict)
