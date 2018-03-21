@@ -1,0 +1,19 @@
+{% extends 'SnoutPage/base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+
+<p>
+<form method ='post'>
+{% csrf_token %}
+
+{{ form.as_p}}
+
+<button type = "submit"> Submit </button>
+</form>
+</p>
+
+<div >
+<h1>{{ text }}</h1
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -24,33 +24,38 @@ def register(request):
     # If it's a HTTP POST, we're interested in processing form data.
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-        
+        profile_form = UserProfileForm(request.POST)
+
         # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
+        #if user_form.is_valid() and profile_form.is_valid
+        if profile_form.is_valid() and user_form.is_valid():
+
             # Save the user's form data to the database.
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            
-            
-            profile = profile_form.save(commit=False)
-            #profile.user = user # removed as it was causing max recursion error- trying to figure out how to fix
+            #profile_form.save()
 
-            new_user = authenticate(username = user_form.cleaned_data['username'],password=user_form.cleaned_data['password'],)
-            login(request, new_user)
+            profile = profile_form.save(commit=False)
+            profile.user = user # removed as it was causing max recursion error- trying to figure out how to fix
+
+
             # If the user provided a profile picture, we need to get it from the input form and
             #put it in the UserProfile model.
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
-            # Now we save the UserProfile model instance.
-            profile.save()
+            # Now we save the UserProfile model instance
+            username =user_form.cleaned_data['username']
+            print ('username' + username)
+            #profile_form.save() fix!!!
+            new_user = authenticate(username =user_form.cleaned_data['username'],password=user_form.cleaned_data['password'],)
+            login(request, new_user,backend='django.contrib.auth.backends.ModelBackend')
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
             return HttpResponseRedirect('/index/')# change to userPage when userPage completed
         else:
-            # Invalid form or forms 
+            # Invalid form or forms
             # Print problems to the terminal.
             print(user_form.errors, profile_form.errors)
     else:
@@ -67,9 +72,12 @@ def register(request):
 
 def user_login(request):
 
-    print ('auda')
+    print 'soem'
+
 
     if request.method == 'POST':
+
+        print 'soem'
 
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -94,7 +102,7 @@ def user_login(request):
             print ("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
     return render(request, {})
-        
+
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/index/')
@@ -108,7 +116,7 @@ def show_category(request, category_name_slug):
         pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
         context_dict['category'] = category
-       
+
     except Category.DoesNotExist:
         context_dict['category'] = None
         context_dict['pages'] = None
@@ -121,7 +129,7 @@ def show_category(request, category_name_slug):
                 result_list = run_query(query)
                 context_dict['query'] = query
                 context_dict['result_list'] = result_list
-          
+
     return render(request, 'SnoutPage/category.html', context_dict)
 
 def pet(request, pet_name_slug):
@@ -142,7 +150,7 @@ def pet(request, pet_name_slug):
         context_dict['category'] = None
         context_dict['picture'] = None
         context_dict['description'] = None
-        
+
     return render(request, 'SnoutPage/pet.html', context_dict)
 
 def post(request, post_name_slug):
@@ -164,7 +172,7 @@ def post(request, post_name_slug):
                 postLike.save()
             else:
                 print(form.errors)
-            
+
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes
@@ -184,8 +192,8 @@ def post(request, post_name_slug):
         context_dict['tag'] = None
         context_dict['author'] = None
         context_dict['created_date'] = None
-        
-        
+
+
     return render(request, 'SnoutPage/post.html', context_dict)
 
 
@@ -223,7 +231,7 @@ def add_pet(request):
             pet.save()
         else:
             print(form.errors)
-            
+
     context_dict = {'form':form}
 
     return render(request, 'SnoutPage/add_pet.html', context_dict)
@@ -243,14 +251,14 @@ def add_post(request, pet_name_slug):
                 post.author = self.request.user
                 post.category = pet.category
                 post.save()
-            return show_pet(request, pet_name_slug)    
+            return show_pet(request, pet_name_slug)
         else:
             print(form.errors)
-            
+
     context_dict = {'form':form, 'pet': pet}
 
     return render(request, 'SnoutPage/add_post.html', context_dict)
-    
+
 
 def search(request):
 
@@ -259,12 +267,15 @@ def search(request):
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
 def user_page(request):
-
+    #picture = user.userprofile.picture
+    userdata = AdditonalUserData.objects.all
+    # descriptions.description.all
+    print (userdata)
     description =""
     friend_list=[]
     pet_list=[]
-
-    return render(request, 'SnoutPage/user_page.html',{})
+    context_dict ={'userdata':userdata}
+    return render(request, 'SnoutPage/user_page.html',context_dict)
 
 def edit_pet(request):
     return render(request,'SnoutPage/edit_pet.html',{})
@@ -286,6 +297,25 @@ def edit_user(request):
         context_dict ={'form':form}
         return render(request, 'SnoutPage/edit_user.html',context_dict)
 
+def add_info(request):
+#def description(self, request):
+
+    form= EditOtherDetails(request.POST)
+    context_dict ={'form':form}
+    if form.is_valid():
+
+
+
+        info = form.save(commit=False)
+        info.user = request.user
+        info.save()
+        text = form.cleaned_data['description']
+        # something similar for picture too
+        form = EditOtherDetails()
+        context_dict['text'] = text
+        context_dict['form']=form
+    return render(request,'SnoutPage/add_info.html' ,context_dict)
+
 def change_password(request):
     if request.method=='POST':
         form = PasswordChangeForm(data=request.POST,user =request.user)
@@ -298,5 +328,5 @@ def change_password(request):
     else:
         form = PasswordChangeForm(user=request.user)
         context_dict = {'form':form}
-    
+
         return render(request,'SnoutPage/change-password.html',context_dict)

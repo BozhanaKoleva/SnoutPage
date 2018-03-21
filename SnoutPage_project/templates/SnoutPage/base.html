@@ -13,14 +13,14 @@
   <title>SnoutPage</title>
   <link href="{% static "images/favicon.ico" %}"  rel="icon" type="image/x-icon" />
 
-  
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Alegreya Sans SC' rel='stylesheet'>
-  
+
   <link rel="stylesheet" href={% static "css/styles.css" %}>
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -35,7 +35,7 @@
 	<ul class="nav navbar-nav">
       <li class="active"><a href="#">Categories</a></li>
 	</ul>
-	
+
     <form class="navbar-form navbar-left" action="/search">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" name="search">
@@ -46,8 +46,8 @@
         </div>
       </div>
     </form>
- 
- 
+
+
  {% if user.is_authenticated %}
     <ul class="nav navbar-nav navbar-right">
 		<li>
@@ -73,23 +73,23 @@
 								<a href="{% provider_login_url 'facebook' method='oauth2' next='http://127.0.0.1:8000/#_=_' %}"Login with Facebook class = "btn btn-fb"><i class ="fa fa-facebook"></i>Facebook</a> <!-- change next value after hosting on python anywhere -->
 								</div>
                                 or
-								 <form class="form" role="form" method="post" action="{% url 'index' %}" accept-charset="UTF-8" id="login-nav">
-										
+								 <form class="form" role="form" method="post" action="{% url 'login' %}" accept-charset="UTF-8" id="login-nav">
+
 										<div class="form-group">
 										{% csrf_token %}
 											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
-											
+
 											 <input type ="text" class = "form-control" placeholder = "Username" name = "username" value ="">
 										</div>
 										<div class="form-group">
 											 <label class="sr-only" for="exampleInputPassword2">Password</label>
 											 <input type="password" name ="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                  
+
 										</div>
 										<div class="form-group">
 											 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
 										</div>
-										
+
 								 </form>
 							</div>
 							<div class="bottom text-center">

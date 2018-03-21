@@ -6,32 +6,38 @@
 
 
 <div class="container-fluid" id = "user-page-top">
-	
- 
+
+
   <div class="row">
 	<div class="panel panel-default" >
 		<div class="panel-body">
 			<div class="col-sm-5" style="background-color:lavender;" id = "user-page-top-content">
+				{% if accounts %}
 				<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatar">
-				
+				{% else %}
+        {%if user.userprofile.Userpicture %}
+				<img src = "{{user.userprofile.Userpicture.url}}" class="img-thumbnail" id = "user-page-avatar">
+				{% endif %}
+        {% endif %}
 				<div class = "well well-sm"><h1 id = "user-page-username">{{user.username}}</h1>
-				
+
 								<div class="btn-group" role="group"> <!-- --------------------- Need to add Add friend/remove button to friend profiles -->
 									<a href="{% url 'edit_user' %}" class="btn btn-default btn-xs"> Edit user</a>
+									<a href = "{% url 'add_info' %}"> Add information about yourself</a>
 									<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Manage Pets
 										<span class="caret"></span></button>
 											<ul class="dropdown-menu">
 												<li><a href="{% url 'add_pet' %}">Add Pet</a></li>
 													<li><a href="{% url 'edit_pet' %}">Edit Pet</a></li>
 											</ul>
-									
+
 								</div>
 				</div>
-	
+
 			</div>
 			<div class="col-sm-7" style="background-color:lavenderblush;" id= "user-page-top-content">
-			
-  
+
+
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#Description">Description</a></li>
@@ -45,45 +51,45 @@
 	<!-- -----------------------------------------------------------------------User Description -->
   </blockquote>
 	</div>
-     
+
     </div>
     <div id="Friends" class="tab-pane fade" id = "friends-tab">
-	
+
   <div class="list-group">
-	 
+
 	 <div class="panel panel-primary">
           <div class="panel-body scrollable-panel">
-		  
-     
+
+
 			 <a href="#LinkToFriendsPage" class="list-group-item text-left"> <!-- ----------------------------------------------------------------------- Link to friends page -->
-        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png"> <!-- ------------------------------------------------------Image of friend --> 
-		
+        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png"> <!-- ------------------------------------------------------Image of friend -->
+
         <label class="name">
             Friend name<br> <!-- ----------------------------------------------------------------------- Friends name -->
         </label>
-		
+
         <label class="pull-right">
             <a id = "friend-list-buttons" class="btn btn-danger  btn-xs glyphicon glyphicon-remove" href="#" title="Delete"></a>  <!-- ---------------- remove friend -->
         </label>
 		</a>
-       
-		
-		
-		
-		
-      
+
+
+
+
+
+
           </div> <!-- End of Scrollable panel -->
         </div>
    </div>
 	</div>
     </div>
-    
+
   </div>  <!-- ---------------- End of second col (desc/friends) -->
 			</div>
 		</div>
 	</div>  <!-- ---------------- End of top row ------------------------------->
-	
-	
+
+
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -129,7 +135,14 @@ These will appear if the user is looking at their own, or another's page:
 <li>List of pets(links)</li>
 
 
+<!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -->
+{% for data in userdata %}
+data.user {{data.user}}, user.username  {{user.username}} ||
+{% if data.user == user.userprofile.user %}
+	<h3> {{ data.description}} </h3>
+{% endif %}
+{% endfor %}
 
- 
+
+
 {% endblock %}
-

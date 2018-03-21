@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from SnoutPage import views
 
 urlpatterns = [
@@ -36,6 +38,6 @@ urlpatterns = [
     url(r'^edit_user/$',views.edit_user, name='edit_user'),
     url(r'^password/$',views.change_password, name='change_password'),
     url(r'^post/$',views.post, name='post'),
-    url(r'^add_post/$',views.post, name='add_post'),
+    url(r'^add_info/$', views.add_info,name = 'add_info'),
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
    # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
-]

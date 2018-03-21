@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from SnoutPage.models import UserProfile, Pet, Comment,  Post, PostLike #Page
+from SnoutPage.models import UserProfile, Pet, Comment,  Post, PostLike, AdditonalUserData #Page
 from SnoutPage.types import *
 
 from django.contrib.auth.forms import UserChangeForm
@@ -14,10 +14,13 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 class UserProfileForm(forms.ModelForm):
+    password = forms.CharField(widget =forms.PasswordInput(),required =True)
+    email = forms.EmailField(required = True)
+    username =forms.CharField(required=True)
     class Meta:
         model = UserProfile
-        fields = ('picture',)
-        
+        fields = ('Userpicture',)
+
 class PetForm(forms.ModelForm):
 ##    category = forms.ChoiceField(choices = TYPES, label="", initial='', widget=forms.Select(), )
 ##    name = forms.CharField(max_length=128)
@@ -46,7 +49,7 @@ class CommentForm(forms.ModelForm):
 ##    def clean(self):
 ##        cleaned_data = self.cleaned_data
 ##        url = cleaned_data.get('url')
-##        
+##
 ##        if url and not url.startswith('http://'):
 ##            url = 'http://' + url
 ##            cleaned_data['url'] = url
@@ -78,4 +81,8 @@ class EditUserForm(UserChangeForm):
     def __init__self(sell, *args, **kwargs):
         super(EditUserForm,self).__init__(*args, **kwargs)
         self.fields['password'].help_text=None
-   
+
+class EditOtherDetails(forms.ModelForm):
+    class Meta:
+        model = AdditonalUserData
+        fields = ('description','picture')
