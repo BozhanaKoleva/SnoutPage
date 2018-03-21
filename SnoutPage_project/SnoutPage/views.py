@@ -140,11 +140,11 @@ def pet(request, pet_name_slug):
         pet = Pet.objects.get(slug=pet_name_slug)
         posts = Post.objects.filter(pet=pet)
         context_dict['posts'] = posts
-        context_dict['owner'] = owner
-        context_dict['name'] = name
-        context_dict['category'] = category
-        context_dict['picture'] = picture
-        context_dict['description'] = description
+        context_dict['owner'] = pet.owner
+        context_dict['name'] = pet.name
+        context_dict['category'] = pet.category
+        context_dict['picture'] = pet.picture
+        context_dict['description'] = pet.description
     except Pet.DoesNotExist:
         context_dict['posts'] = None
         context_dict['owner'] = None

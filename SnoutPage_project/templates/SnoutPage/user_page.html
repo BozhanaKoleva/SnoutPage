@@ -192,7 +192,7 @@
 	<strong>You have {{ pet_number }} pets </strong>
     <ul>
         {% for pet in pets %}
-	<li>{{pet.name}}</li>
+	<li><a href="{% url 'pet' pet.slug %}">{{ pet.name }}</a></li>
 	<li>{{pet.category}}</li>
 	<li>{{pet.picture}}</li>
 	<li>{{pet.description}}</li>
