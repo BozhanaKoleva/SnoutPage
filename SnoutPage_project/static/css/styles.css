@@ -1,5 +1,7 @@
 body {
     font-family: 'Alegreya Sans SC';
+	overflow: auto;
+	background-color:#E0FFFF;
 }
 
 #logo{
@@ -106,11 +108,6 @@ margin-left: -15px;
 	margin-left:5px;
 }
 
-#user-page-top{
-	margin-top:55px;
-	display: table;
-	height:263px;
-    width: 100%;
 }
 
 #user-page-avatar{
@@ -125,6 +122,7 @@ margin-left: -15px;
 #user-page-username{
 	text-align:center;
 	text-transform: capitalize;
+	height:200px;
 }
 
 .tab-content{
@@ -149,10 +147,13 @@ margin-left: -15px;
 }
 
 .scrollable-panel{
-    max-height:240px;
+    
     overflow: auto;
 }
 
+#description-scroll{
+	max-height:240px;
+}
 
 
 img {
@@ -184,5 +185,19 @@ img {
 
 #friend-list-buttons{
 	top:-25px;
-	right: -770px;
+	right: -96%;
 }
+
+#carousel-container{
+	width:101.9%;
+	margin-left:-15px;
+	right:-105px;
+	
+}
+
+#after-header{
+	margin-top:50px;
+	overflow:auto;
+}
+
+
