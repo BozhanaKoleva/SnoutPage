@@ -8,12 +8,12 @@ from SnoutPage.types import *
 
 # A draft for models
 
-##class Category(models.Model):
-##    name = models.CharField(max_length=18, unique=True)
-##    class Meta:
-##        verbose_name_plural = 'Categories'
-##        def __str__(self):
-##            return self.name
+class Category(models.Model):
+   name = models.CharField(max_length=18, unique=True)
+   class Meta:
+       verbose_name_plural = 'Categories'
+       def __str__(self):
+           return self.name
 ##
 ##class Page(models.Model):
 ##    category = models.ForeignKey(Category)
@@ -43,8 +43,8 @@ post_save.connect(create_profile, sender = User)
 
 class Pet(models.Model):
     slug = models.SlugField(unique=True, default=None)
-    category = models.CharField(max_length=6, choices=TYPES, default="DOG")
-    owner = models.ForeignKey(User)
+    category = models.ForeignKey(Category,null=True)
+    owner = models.ForeignKey(User,null=True)#change
     name = models.CharField(max_length=120, unique=True)
     picture = models.ImageField(upload_to='pet_profile_images',blank=True)
     description = models.CharField(max_length=600, blank=True)
@@ -54,6 +54,9 @@ class Pet(models.Model):
         self.slug = slugify(self.name)
         super(Pet, self).save(*args, **kwargs)
 
+    class Meta:
+        verbose_name_plural='pets'
+
 class Post(models.Model):
     slug = models.SlugField(unique=True, default=None)
     category = models.CharField(max_length=6, choices=TYPES, default="DOG")
@@ -61,9 +64,10 @@ class Post(models.Model):
     description = models.CharField(max_length=300, blank=True)
     tag = models.CharField(max_length=30, blank=True)
     picture = models.ImageField(upload_to='post_images', blank=True)
-    pet = models.ForeignKey(Pet, default=None)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, default=None,null =True) ##change this and below to get rid of default and null fields
+    author = models.ForeignKey(User, on_delete=models.CASCADE,default="",null =True)
     created_date = models.DateTimeField(default=timezone.now)
+    views = models.IntegerField(default =0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
