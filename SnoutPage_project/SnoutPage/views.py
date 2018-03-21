@@ -139,6 +139,7 @@ def pet(request, pet_name_slug):
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
         posts = Post.objects.filter(pet=pet)
+        context_dict['slug'] = pet_name_slug
         context_dict['posts'] = posts
         context_dict['owner'] = pet.owner
         context_dict['name'] = pet.name
@@ -146,6 +147,7 @@ def pet(request, pet_name_slug):
         context_dict['picture'] = pet.picture
         context_dict['description'] = pet.description
     except Pet.DoesNotExist:
+        context_dict['slug'] = None
         context_dict['posts'] = None
         context_dict['owner'] = None
         context_dict['name'] = None
@@ -253,7 +255,7 @@ def add_post(request, pet_name_slug):
                 post.author = self.request.user
                 post.category = pet.category
                 post.save()
-            return show_pet(request, pet_name_slug)
+            return pet(request, pet_name_slug)
         else:
             print(form.errors)
 

@@ -9,8 +9,28 @@
 	<li>{{category}}</li>
 	<li>{{description}}</li>
 	<li> link to edit pet page</li>
+	<li> {{owner}} </li>
+	
+
 </ul>
 <br />
 After this we'd have a reddit-like list of posts
+
+<div id="posts">
+	<a href="{% url 'add_post' %}">Add a Post</a>
+    {% if posts %}
+    <ul>
+        {% for post in posts %}
+	<li><a href="{% url 'post' post.slug %}">{{ post.title }}</a></li>
+	<li>{{post.picture}}</li>
+	<li>{{post.description}}</li>
+
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>pet {{name}} has no posts yet!.</strong><br/>
+    {% endif %}
+
+    </div>
 
 {% endblock %}
