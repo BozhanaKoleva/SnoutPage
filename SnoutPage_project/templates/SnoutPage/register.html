@@ -1,7 +1,9 @@
 {% extends 'SnoutPage/base.html' %}
 {% load staticfiles %}
 <head>
+<title>
 Register
+</title>
 <script>
 $(document).ready( function() {
     	$(document).on('change', '.btn-file :file', function() {
@@ -66,9 +68,6 @@ $(document).ready( function() {
 					
 					
 					{% csrf_token %}
-					
-					<!--{{ user_form.as_p }} <!-- Not sure how to use the bootstrap form to send the data here 
-					{{ profile_form.as_p }}-->
 					
 					
 					
