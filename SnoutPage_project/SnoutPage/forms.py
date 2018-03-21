@@ -78,7 +78,7 @@ class EditUserForm(UserChangeForm):
         model = User
         fields = ('email','first_name','last_name')
         exclude=('password',)
-    def __init__self(sell, *args, **kwargs):
+    def __init__self(self, *args, **kwargs):
         super(EditUserForm,self).__init__(*args, **kwargs)
         self.fields['password'].help_text=None
 

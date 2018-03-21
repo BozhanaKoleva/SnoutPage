@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData 
+from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData
 from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
