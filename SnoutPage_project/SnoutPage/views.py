@@ -3,10 +3,12 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData 
 from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 #from SnoutPage import Friend
 
 def index(request):
@@ -72,12 +74,12 @@ def register(request):
 
 def user_login(request):
 
-    print 'soem'
+   # print 'soem'
 
 
     if request.method == 'POST':
 
-        print 'soem'
+       # print 'soem'
 
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -167,7 +169,7 @@ def post(request, post_name_slug):
             context_dict['form'] = form
             if form.is_valid():
                 postlike = form.save(commit=False)
-                postlike.user = self.request.user
+                postlike.user = request.user
                 postLike.post = post
                 postLike.save()
             else:
@@ -227,7 +229,7 @@ def add_pet(request):
         form = PetForm(request.POST)
         if form.is_valid():
             pet = form.save(commit=False)
-            pet.owner = self.request.user
+            pet.owner = request.user
             pet.save()
         else:
             print(form.errors)
@@ -266,6 +268,7 @@ def search(request):
 
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
+#@login_required
 def user_page(request):
     #picture = user.userprofile.picture
     userdata = AdditonalUserData.objects.all
@@ -273,8 +276,11 @@ def user_page(request):
     print (userdata)
     description =""
     friend_list=[]
-    pet_list=[]
-    context_dict ={'userdata':userdata}
+    user = request.user
+    pets = Pet.objects.filter(owner=user)
+    context_dict = {}
+    context_dict['pets'] = pets
+    context_dict['userdata'] = userdata
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 def edit_pet(request):

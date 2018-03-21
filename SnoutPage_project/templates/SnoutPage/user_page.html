@@ -132,7 +132,23 @@ These will appear if the user is looking at their own, or another's page:
 <li><a href = "#" >Add friend </a></li>
 
 
-<li>List of pets(links)</li>
+
+<!-- lists the users pets --!>
+<div id="pets">
+    {% if pets %}
+    <ul>
+        {% for pet in pets %}
+        <li>
+            <a href="/SnoutPage/pet/?pet_id={{pet.id}}">{{pet.name}}</a>
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>No pets.</strong><br/>
+    {% endif %}
+
+    </div>
 
 
 <!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -->

@@ -2,16 +2,18 @@
 {% load staticfiles %}
 {% block body_block %}
 
+{% if user.is_authenticated %}
 Add:
 <ul>
-	<form id="PetForm" method="post" action ="add_pet"/>
-	<li> the pet's picture</li>
-	<li> description</li>
-	<li> name</li>
-	<li> tags</li>
-	<input type ="text" class = "form-control" placeholder = "description" name = "description" value ="">
+	<form id="PetForm" method="post" action ="{% url 'add_pet' %}"/>
+	{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
 	<input type="submit" name="submit" value="Add Pet"/>
 	</form>
 </ul>
-
+{% else %}
+    <strong>User not authenticated.</strong><br/>
+    {% endif %}
 {% endblock %}
