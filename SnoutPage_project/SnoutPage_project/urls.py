@@ -39,5 +39,7 @@ urlpatterns = [
     url(r'^password/$',views.change_password, name='change_password'),
     url(r'^post/$',views.post, name='post'),
     url(r'^add_info/$', views.add_info,name = 'add_info'),
+	url(r'SnoutPage/(?P<pet_name_slug>[\w\-]+)/$', 
+        views.pet, name='pet'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
    # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
