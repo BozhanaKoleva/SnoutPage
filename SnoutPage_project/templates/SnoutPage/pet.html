@@ -3,16 +3,119 @@
 
 {% block body_block %}
 
-<ul>
-	<li>{{picture}}</li>
-	<li>{{name}}</li>
+
+<div class= "row">
+<div class = "col-xs-5">
+<img src = "{{picture}}">
+</div>
+<div class="col-xs-7">
+
+<div class="container">
+  <div id = "pet-name-jumbo"class="jumbotron">
+   <h1>{{name}}</h1>	
+  </div>
+</div>
+
+
+<div class = "panel panel-default">
+<div class="panel-heading">Popularity stats</div>
+
+<span class="label" id = "popularity-text">Overall number of likes: </span> <span class="badge"> 5</span> <span class= "glyphicon glyphicon-thumbs-up"> </span> <!----------------- pet overall number of likes on pet's posts-------->
+
+<br>
+
+<span class="label" id = "popularity-text">Overall number of comments: </span> <span class="badge"> 5</span> <span class= "glyphicon glyphicon-comment"> </span>  <!----------------- pet overall number of comments on pet's posts -------->
+<a  href="{% url 'add_post' %}" class="btn btn-primary btn-sm pull-right" role="button">Add Post</a>
+<br>
+
+<span class="label" id = "popularity-text">Overall number of posts: </span> <span class="badge"> 5</span> <span class= "glyphicon glyphicon-asterisk"> </span>  <!----------------- pet overall number of posts -------->
+
+
+
+</div>
+</div>
+</div>
+
+<div class = "row" id ="pet-page-content">
+
+<div class = "col-lg-5">
+<div class="panel panel-default"  id = "pet-panel-panel" >
+  <div class="panel-heading" id = "pet-posts-label">Pet's description</div>
+  <div class="panel-body">
+  
+  <ul>
+	<li></li>
 	<li>{{category}}</li>
 	<li>{{description}}</li>
-	<li> link to edit pet page</li>
+
 	<li> {{owner}} </li>
 	
 
 </ul>
+
+  
+  
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="col-lg-7">
+<div class="panel panel-default" id = "pet-panel-panel" >
+  <div class="panel-heading" id = "pet-posts-label">Pet's posts</div>
+  <div class="panel-body" id = "pet-panel-post-body">
+  
+   <!-- Trigger the modal with a button -->
+ <!-- For Post create a link ----------------------------------------------->
+   <div class="list-group">
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+  
+</div> 
+  
+  <!-- Trigger the modal with a button -->
+ <!-- For Post create a link ----------------------------------------------->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="false">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  
+  
+
+	</div>
+</div>
+</div>
+
+</div>
+
+
+
 <br />
 After this we'd have a reddit-like list of posts
 

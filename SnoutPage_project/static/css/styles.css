@@ -217,4 +217,31 @@ img {
 	text-align:left;
 }
 
+#pet-name-jumbo{
+	width:70%;
+	text-align:center;
+}
 
+#popularity-text{
+	color:black;
+}
+#pet-posts-label{
+	text-align:center;
+}
+
+#pet-page-content{
+	height: 250px;
+}
+
+#pet-panel-panel{
+	margin-left: -12px;
+	margin-right: -12px;
+	height: 250px;
+}
+
+#pet-panel-post-body{
+	overflow:auto;
+	height:205px;
+	padding-top:2px;
+
+}
