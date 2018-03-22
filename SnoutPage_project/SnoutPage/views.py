@@ -274,9 +274,14 @@ def search(request):
 def user_page(request):
     #picture = user.userprofile.picture
     userdata = AdditonalUserData.objects.all
+<<<<<<< HEAD
     # descriptions.description.all
     print (userdata)
     description =""
+=======
+    # # descriptions.description.all
+    print userdata
+>>>>>>> 28ddb34be0c268d8ceb72097be6a4140d28f2cc5
     friend_list=[]
     user = request.user
     pets = Pet.objects.filter(owner=user)
@@ -285,6 +290,20 @@ def user_page(request):
     context_dict['pet_number'] = pet_number
     context_dict['pets'] = pets
     context_dict['userdata'] = userdata
+<<<<<<< HEAD
+=======
+
+    #userdata = AdditonalUserData.objects.all
+    user = request.user
+
+    user = User.objects.get(username =user.username)
+    # users = request.user
+    # allusers = User.objects.all()
+    # context_dict  ={'user':users, 'allusers':allusers}
+    #context_dict = {'user':user,'userdata':userdata}
+    #context_dict['user':user]
+    #context_dict['userdata':userdata]
+>>>>>>> 28ddb34be0c268d8ceb72097be6a4140d28f2cc5
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 def edit_pet(request):
@@ -313,8 +332,12 @@ def add_info(request):
     form= EditOtherDetails(request.POST)
     context_dict ={'form':form}
     if form.is_valid():
+<<<<<<< HEAD
 
 
+=======
+        #newfile.save(
+>>>>>>> 28ddb34be0c268d8ceb72097be6a4140d28f2cc5
 
         info = form.save(commit=False)
         info.user = request.user
