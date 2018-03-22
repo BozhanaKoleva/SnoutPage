@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from SnoutPage import views
 
-app_name = 'SnoutPage'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name = 'index'),
@@ -31,11 +30,9 @@ urlpatterns = [
     url(r'^login/$', views.user_login, name = 'login'),
     url(r'^register/$',views.register, name = 'register'),
     url(r'^search/$',views.search, name = 'search'),
-    url(r'^show_user_page/$',views.show_user_page, name= 'show_user_page'),
-    # url(r'^show_user_page/(P<pk>\d+)/$',views.show_user_page, name= 'show_user_page_with_pk'),
-    url(r'^show_user_page/(?P<username>[\w\-]+)/$', views.show_user_page, name='show_user_page'),
+    url(r'^user_page/$',views.user_page, name= 'user_page'),
     #url(r'^pet/$',views.pet, name='pet'),
-##    url(r'SnoutPage/(?P<pet_name_slug>[\w\-]+)/$',
+##    url(r'SnoutPage/(?P<pet_name_slug>[\w\-]+)/$', 
 ##        views.pet, name='pet'),
     url(r'^edit_pet/$', views.edit_pet, name='edit_pet'),
     url(r'^category_list/$', views.category_list, name='category_list'),

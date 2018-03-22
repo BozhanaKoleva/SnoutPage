@@ -49,7 +49,7 @@ def register(request):
             # Now we save the UserProfile model instance
             username =user_form.cleaned_data['username']
             print ('username' + username)
-            #profile.save() #fix!!!
+            #profile_form.save() fix!!!
             new_user = authenticate(username =user_form.cleaned_data['username'],password=user_form.cleaned_data['password'],)
             login(request, new_user,backend='django.contrib.auth.backends.ModelBackend')
             # Update our variable to indicate that the template
@@ -271,33 +271,20 @@ def search(request):
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
 #@login_required
-def show_user_page(request):
+def user_page(request):
     #picture = user.userprofile.picture
-    # userdata = AdditonalUserData.objects.all
-    # # descriptions.description.all
-    # print (userdata)
-    # description =""
-    # friend_list=[]
-    # user = request.user
-    # pets = Pet.objects.filter(owner=user)
-    # pet_number = pets.count()
-    # context_dict = {}
-    # context_dict['pet_number'] = pet_number
-    # context_dict['pets'] = pets
-    # context_dict['userdata'] = userdata
-    # if pk:
-    #     users = User.objects.get(pk=pk)
-    # else:
     userdata = AdditonalUserData.objects.all
+    # descriptions.description.all
+    print (userdata)
+    description =""
+    friend_list=[]
     user = request.user
-    try:
-        user = User.objects.get(username =user.username)
-    except:
-        raise Http404
-    # users = request.user
-    # allusers = User.objects.all()
-    # context_dict  ={'user':users, 'allusers':allusers}
-    context_dict = {'user':user,'userdata':userdata}
+    pets = Pet.objects.filter(owner=user)
+    pet_number = pets.count()
+    context_dict = {}
+    context_dict['pet_number'] = pet_number
+    context_dict['pets'] = pets
+    context_dict['userdata'] = userdata
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 def edit_pet(request):
@@ -322,15 +309,12 @@ def edit_user(request):
 
 def add_info(request):
 #def description(self, request):
-    context_dict={}
-    #if request.method =='POST':
+
     form= EditOtherDetails(request.POST)
     context_dict ={'form':form}
     if form.is_valid():
-        newfile =AdditonalUserData(picture = request.FILES['picture'])
-        #newfile.save()
 
-        file = request.FILES['picture']
+
 
         info = form.save(commit=False)
         info.user = request.user
@@ -340,11 +324,6 @@ def add_info(request):
         form = EditOtherDetails()
         context_dict['text'] = text
         context_dict['form']=form
-
-        user = AdditonalUserData.objects.filter(user=request.user)
-        user.picture =request.POST.get('picture')
-        context_dict['picture']= user.picture
-
     return render(request,'SnoutPage/add_info.html' ,context_dict)
 
 def change_password(request):
