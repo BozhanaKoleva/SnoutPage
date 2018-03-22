@@ -5,13 +5,33 @@
 {% endblock %}
 
 {% block body_block %}
-    <div>
-    {%if post%}
-    <img src="{{post.picture.url}}">
-    {%else%}
-        <p>No post</p>
-    {%endif%}
-    </div>
+    <ul>
+	<li>{{title}}</li>
+	<li>{{picture}}</li>
+	<li>{{category}}</li>
+	<li>{{description}}</li>
+	<li> {{pet}}</li>
+	<li> {{likes}}</li>
+	<li>{{created_date}}</li>
+	<li> {{author}} </li>
+	
+
+</ul>
   
-    {#{{ request.build_absolute_uri }} #}
+    <div id="comments">
+	<a href="{% url 'add_comment' %}">Add a comment</a>
+    {% if comments %}
+    <ul>
+        {% for comment in comments %}
+	<li>{{comment.author}}</li>
+	<li>{{comment.description}}</li>
+	<li>{{comment.created_date}}</li>
+
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>post has no comments yet!.</strong><br/>
+    {% endif %}
+
+    </div>
 {% endblock %}

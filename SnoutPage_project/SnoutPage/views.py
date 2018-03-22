@@ -272,65 +272,20 @@ def search(request):
 
 #@login_required
 def show_user_page(request):
-    #picture = user.userprofile.picture
-    # userdata = AdditonalUserData.objects.all
-    # # descriptions.description.all
-    # print (userdata)
-    # description =""
-    # friend_list=[]
-    # user = request.user
-    # pets = Pet.objects.filter(owner=user)
-    # pet_number = pets.count()
-    # context_dict = {}
-    # context_dict['pet_number'] = pet_number
-    # context_dict['pets'] = pets
-    # context_dict['userdata'] = userdata
-    # if pk:
-    #     users = User.objects.get(pk=pk)
-    # else:
     userdata = AdditonalUserData.objects.all
-<<<<<<< HEAD
-<<<<<<< HEAD
-    # descriptions.description.all
-    print (userdata)
-    description =""
-=======
-    # # descriptions.description.all
-    print userdata
->>>>>>> 28ddb34be0c268d8ceb72097be6a4140d28f2cc5
-    friend_list=[]
     user = request.user
     pets = Pet.objects.filter(owner=user)
     pet_number = pets.count()
     context_dict = {}
+
+    try:
+        user = User.objects.get(username = user.username)
+    except:
+        print ('didnt work')
     context_dict['pet_number'] = pet_number
     context_dict['pets'] = pets
     context_dict['userdata'] = userdata
-<<<<<<< HEAD
-=======
-
-    #userdata = AdditonalUserData.objects.all
-    user = request.user
-
-    user = User.objects.get(username =user.username)
-    # users = request.user
-    # allusers = User.objects.all()
-    # context_dict  ={'user':users, 'allusers':allusers}
-    #context_dict = {'user':user,'userdata':userdata}
-    #context_dict['user':user]
-    #context_dict['userdata':userdata]
->>>>>>> 28ddb34be0c268d8ceb72097be6a4140d28f2cc5
-=======
-    user = request.user
-    try:
-        user = User.objects.get(username =user.username)
-    except:
-        raise Http404
-    # users = request.user
-    # allusers = User.objects.all()
-    # context_dict  ={'user':users, 'allusers':allusers}
-    context_dict = {'user':user,'userdata':userdata}
->>>>>>> parent of 487fbac... Revert "userpage status"
+    context_dict['user']=user
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 def edit_pet(request):
@@ -360,19 +315,10 @@ def add_info(request):
     form= EditOtherDetails(request.POST)
     context_dict ={'form':form}
     if form.is_valid():
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-=======
-        #newfile.save(
->>>>>>> 28ddb34be0c268d8ceb72097be6a4140d28f2cc5
-=======
         newfile =AdditonalUserData(picture = request.FILES['picture'])
         #newfile.save()
 
         file = request.FILES['picture']
->>>>>>> parent of 487fbac... Revert "userpage status"
 
         info = form.save(commit=False)
         info.user = request.user
