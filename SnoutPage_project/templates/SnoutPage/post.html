@@ -10,16 +10,17 @@
 	<li>{{picture}}</li>
 	<li>{{category}}</li>
 	<li>{{description}}</li>
-	<li> {{pet}}</li>
+	<li> {{pet.name}}</li>
 	<li> {{likes}}</li>
 	<li>{{created_date}}</li>
 	<li> {{author}} </li>
+	
 	
 
 </ul>
   
     <div id="comments">
-	<a href="{% url 'add_comment' %}">Add a comment</a>
+
     {% if comments %}
     <ul>
         {% for comment in comments %}

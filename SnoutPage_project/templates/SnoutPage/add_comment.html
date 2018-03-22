@@ -2,14 +2,18 @@
 {% load staticfiles %}
 {% block body_block %}
 
-Add:
+{% if user.is_authenticated %}
+Add a comment to {{post.title}}:
 <ul>
-	<form id="CommentForm" method="post" action ="add_comment"/>
+	<form id="CommentForm" method="post" action =  "{% url 'add_comment' post.slug %}"/>
 	{% csrf_token %}
     <table>
         {{ form.as_table }}
     </table>
-	<input type="submit" name="submit" value="Add comment"/>
+	<input type="submit" name="submit" value="Add comment" action ="{% url 'index' %}"/>
 	</form>
 </ul>
+{% else %}
+    <strong>User not authenticated.</strong><br/>
+    {% endif %}
 {% endblock %}

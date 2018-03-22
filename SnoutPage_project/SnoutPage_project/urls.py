@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^password/$',views.change_password, name='change_password'),
     url(r'^add_info/$', views.add_info, name = 'add_info'),
     url(r'^add_post/(?P<pet_name_slug>[\w\-]+)/$', views.add_post, name = 'add_post'),
+    url(r'^add_comment/(?P<post_title_slu>[\w\-]+)/$', views.add_comment, name = 'add_comment'),
     url(r'SnoutPage/pet/(?P<pet_name_slug>[\w\-]+)/$', views.pet, name='pet'),
     url(r'SnoutPage/post/(?P<post_title_slug>[\w\-]+)/$', views.post, name='post'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -159,11 +159,11 @@ def pet(request, pet_name_slug):
 
     return render(request, 'SnoutPage/pet.html', context_dict)
 
-def post(request, post_name_slug):
+def post(request, post_title_slug):
     context_dict = {}
     try:
-        post = Post.objects.get(slug=post_name_slug)
-        liked_by_user = PostLike.objects.filter(post=post, liked = True, user = self.request.user)
+        post = Post.objects.get(slug=post_title_slug)
+        liked_by_user = PostLike.objects.filter(post=post, liked = True, user = request.user)
         if liked_by_user:
             #context_dict['message'] = "you have liked this post!"
             context_dict['form'] = None
@@ -178,18 +178,20 @@ def post(request, post_name_slug):
                 postLike.save()
             else:
                 print(form.errors)
-
+        
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes
+        context_dict['pet'] = post.pet
         context_dict['comments'] = comments
-        context_dict['category'] = category
-        context_dict['title'] = title
-        context_dict['description'] = description
-        context_dict['tag'] = tag
-        context_dict['author'] = author
-        context_dict['created_date'] = created_date
+        context_dict['category'] = post.category
+        context_dict['title'] = post.title
+        context_dict['description'] = post.description
+        context_dict['tag'] = post.tag
+        context_dict['author'] = post.author
+        context_dict['created_date'] = post.created_date
     except Post.DoesNotExist:
+        context_dict['pet'] = None
         context_dict['likes'] = None
         context_dict['comments'] = None
         context_dict['category'] = None
@@ -242,34 +244,47 @@ def add_pet(request):
 
     return render(request, 'SnoutPage/add_pet.html', context_dict)
 
+def add_comment(request, post_title_slug):
+    context_dict={}
+    try:
+        post = Post.objects.get(slug=post_title_slug)
+    except Post.DoesNotExist:
+        post = None
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            if post:
+                comment = form.save(commit=False)
+                comment.author = request.user
+                comment.post = post
+                comment.save()
+            return render(request, 'SnoutPage/post.html', context_dict)
+        else:
+            print(form.errors)
+    context_dict = {'form':form, 'post': post}
+    return render(request, 'SnoutPage/add_comment.html', context_dict)
+
 
 def add_post(request, pet_name_slug):
     context_dict={}
-    print("add post")
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:
         pet = None
     form = PostForm()
     if request.method == 'POST':
-        print("post")
         form = PostForm(request.POST)
         if form.is_valid():
-            print("form valid")
             if pet:
-                print("pet is here")
                 post = form.save(commit=False)
                 post.pet = pet
                 post.author = request.user
                 post.category = pet.category
                 post.save()
                 context_dict['slug']=pet_name_slug
-            
             return render(request, 'SnoutPage/pet.html', context_dict)
-
-            
         else:
-            print("form errors")
             print(form.errors)
 
     context_dict = {'form':form, 'pet': pet}
