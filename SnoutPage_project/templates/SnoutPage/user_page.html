@@ -127,6 +127,7 @@
   <div class="panel-heading">User's Pets</div>
   <div class="panel-body">
 
+  {% if pets %}
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   
   <!-- Wrapper for slides -->
@@ -169,6 +170,10 @@
   </a>
 </div>
 </div>
+{% else %}
+<h1 align="center"><mark>The user has no pets.<mark></h1>
+{% endif %}
+
 </div>
 </div>
 
