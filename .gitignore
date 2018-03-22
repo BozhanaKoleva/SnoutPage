@@ -1,3 +1,2 @@
-
-SnoutPage_project/SnoutPage/migrations/__pycache__/__init__.cpython-36.pyc
-SnoutPage_project/SnoutPage/migrations/__pycache__/0001_initial.cpython-36.pyc
+*.pyc
+db.sqlite3
