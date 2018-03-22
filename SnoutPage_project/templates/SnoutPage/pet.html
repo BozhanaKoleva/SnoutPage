@@ -70,35 +70,36 @@
   
    <!-- Trigger the modal with a button -->
  <!-- For Post create a link ----------------------------------------------->
-   <div class="list-group">
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
-  <a href= "" data-toggle="modal" data-target="#myModal"  class="list-group-item">First item</a>
+ 
+  {% if posts %}
   
-</div> 
+        {% for post in posts %}
+	
+   <div class="list-group">
+  <a href="{% url 'post' post.slug %}" data-toggle="modal" data-target="#myModal"  class="list-group-item">{{ post.title }}</a>
+  
+
+
   
   <!-- Trigger the modal with a button -->
  <!-- For Post create a link ----------------------------------------------->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog" data-backdrop="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title">{{ post.title }}</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+	  <img src= "{{post.picture}}">
+        <p>{{post.description}}</p>
       </div>
       <div class="modal-footer">
+	  <p class= "pull-left">{{post.tag}}</p>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -106,7 +107,11 @@
   </div>
 </div>
   
-  
+   {% endfor %}
+   </div> 
+  {% else %}
+   <h1 align="center"><mark>{{name}} has no posts yet.<mark></h1>
+    {% endif %}
 
 	</div>
 </div>
@@ -114,27 +119,5 @@
 
 </div>
 
-
-
-<br />
-After this we'd have a reddit-like list of posts
-
-<div id="posts">
-		<a href="{% url 'add_post' slug %}">Add a Post</a>
-    {% if posts %}
-    <ul>
-        {% for post in posts %}
-	<li><a href="{% url 'post' post.slug %}">{{ post.title }}</a></li>
-	<li>{{post.picture}}</li>
-	<li>{{post.description}}</li>
-	<li>{{post.tag}}</li>
-
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>pet {{name}} has no posts yet!.</strong><br/>
-    {% endif %}
-
-    </div>
 
 {% endblock %}

@@ -230,18 +230,18 @@ img {
 }
 
 #pet-page-content{
-	height: 250px;
+	height: 300px;
 }
 
 #pet-panel-panel{
 	margin-left: -12px;
 	margin-right: -12px;
-	height: 250px;
+	height: 320px;
 }
 
 #pet-panel-post-body{
 	overflow:auto;
-	height:205px;
+	height:275px;
 	padding-top:2px;
 
 }
