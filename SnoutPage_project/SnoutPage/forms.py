@@ -56,17 +56,18 @@ class CommentForm(forms.ModelForm):
 ##            return cleaned_data
 
 class PostForm(forms.ModelForm):
-##    title = forms.CharField(max_length=128,
-##    help_text="Please enter the title of the post.")
-##    description = forms.CharField(max_length=300,
-##    help_text="Please enter the description of the post.")
-##    tags = forms.CharField (max_length=30,
-##    help_text="Add a tag.")
-##    picture = forms.ImageField()
-##    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    title = forms.CharField(max_length=128,
+    help_text="Please enter the title of the post.")
+    description = forms.CharField(max_length=300,
+    help_text="Please enter the description of the post.")
+    tags = forms.CharField (max_length=30,
+    help_text="Add a tag.")
+    picture = forms.ImageField()
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
         model = Post
         fields = ('title', 'description', 'tag', 'picture',)
+		
 
 class PostLikeForm(forms.ModelForm):
     class Meta:

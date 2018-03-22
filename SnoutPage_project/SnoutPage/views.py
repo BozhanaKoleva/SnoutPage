@@ -241,7 +241,7 @@ def add_pet(request):
     return render(request, 'SnoutPage/add_pet.html', context_dict)
 
 
-def add_post(request, pet_name_slug):
+def add_post(request, pet_name_slug=None):
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:

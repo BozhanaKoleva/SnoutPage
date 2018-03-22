@@ -1,0 +1,17 @@
+{% extends 'SnoutPage/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+
+{% endblock %}
+
+{% block body_block %}
+    <div>
+    {%if post%}
+    <img src="{{post.picture.url}}">
+    {%else%}
+        <p>No post</p>
+    {%endif%}
+    </div>
+  
+    {#{{ request.build_absolute_uri }} #}
+{% endblock %}
