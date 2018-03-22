@@ -67,7 +67,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'description', 'tag', 'picture',)
-		
+
 
 class PostLikeForm(forms.ModelForm):
     class Meta:

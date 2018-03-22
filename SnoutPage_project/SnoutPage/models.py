@@ -93,6 +93,7 @@ class AdditonalUserData(models.Model):
     user = models.ForeignKey(User)
     description = models.CharField(max_length=100, default="")
     picture = models.ImageField(upload_to='profile_images',blank=True)
+    date = models.DateTimeField(default =timezone.now)
 
 
 
