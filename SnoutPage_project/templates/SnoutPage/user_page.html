@@ -122,37 +122,41 @@
 		</div>
 	</div>  <!-- ---------------- End of top row ------------------------------->
 	
-	<div class="container-fluid row"id = "carousel-container">
-	<div class="panel panel-default"  id = "carousel-container">
-  <div class="panel-heading">User's pets</div>
-  <div class="panel-body col-xl-12 "  id = "carousel-container">
-
 	
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
+<div class="panel panel-default">
+  <div class="panel-heading">User's Pets</div>
+  <div class="panel-body">
 
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
-    <div class="item active">
-      <img src="" alt="pet" href="#PetsProfilelink"> <!-- Pet's profile picture -->
-	  <div class="carousel-caption">
-        <h3>LA</h3> <!-- Pet's name -->
+{% for pet in pets %}
+    {% if forloop.first %}
+        <div class="active item">
+    {% else %}
+        <div class="item">
+    {% endif %}
+        
+		
+		<!--<img src="{{pet.picture}}" alt="Picture of {{ pet.name }}"  href="{% url 'pet' pet.slug %}" id="carousel-pet-picture"> <!-- Pet's profile picture -->
+		
+		
+		<img src="{% static "images/logo.png" %}" alt="Picture of {{ pet.name }}"  href="{% url 'pet' pet.slug %}" id="carousel-pet-picture"> <!-- TEMP EXAMPLE, REMOVE WHEN PET PICRURES WORK -->
+		
+		
+	  <div class="carousel-caption" id = "carousel-pet-name">
+	  <blockquote>
+        <h3><a href="{% url 'pet' pet.slug %}">{{ pet.name }}</a></h3> <!-- Pet's name -->
+		<footer class="blockquote-footer"> {{pet.description}}</footer>
+		 </blockquote>
       </div>
+       
     </div>
+{% endfor %}
 
-    <div class="item">
-      <img src="chicago.jpg" alt="Chicago">
-    </div>
-
-    <div class="item">
-      <img src="ny.jpg" alt="New York">
-    </div>
-  </div>
+</div>
+  
 
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -164,30 +168,15 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-   </div>
-
 </div>
 </div>
 </div>
 
-<div class="carousel-inner">
-{% for pet in pets %}
-    {% if forloop.first %}
-        <div class="active item">
-    {% else %}
-        <div class="item">
-    {% endif %}
-        <blockquote>
-            <p>{{ pet.name}}</p>
-        </blockquote>
-       
-    </div>
-{% endfor %}
 </div>
 
-
-
+<!--
 <div id="pets">
+
     {% if pets %}
 	<strong>You have {{ pet_number }} pets </strong>
     <ul>
@@ -204,13 +193,14 @@
     {% endif %}
 
     </div>
+ 
 
-<!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -->
+<!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -
 {% for data in userdata %}
 data.user {{data.user}}, user.username  {{user.username}} ||
 {% if data.user == user.userprofile.user %}
 	<h3> {{ data.description}} </h3>
 {% endif %}
 {% endfor %}
-{% endblock %}
+{% endblock %} --->
 

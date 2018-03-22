@@ -179,7 +179,6 @@ img {
     width:80px;
 }
 
-
 .name {
     color:#5bc0de;    
 }
@@ -207,6 +206,15 @@ img {
     margin-right: auto;
     margin-top: 5px;
 	padding:10px;
+}
+
+#carousel-pet-picture{
+	height:230px;
+	margin-left:45%;
+}
+
+#carousel-pet-name{
+	text-align:left;
 }
 
 
