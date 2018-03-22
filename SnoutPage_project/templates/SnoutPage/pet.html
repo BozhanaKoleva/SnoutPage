@@ -25,7 +25,7 @@
 <br>
 
 <span class="label" id = "popularity-text">Overall number of comments: </span> <span class="badge"> 5</span> <span class= "glyphicon glyphicon-comment"> </span>  <!----------------- pet overall number of comments on pet's posts -------->
-<a  href="{% url 'add_post' %}" class="btn btn-primary btn-sm pull-right" role="button">Add Post</a>
+<a  href="{% url 'add_post' slug %}" class="btn btn-primary btn-sm pull-right" role="button">Add Post</a>
 <br>
 
 <span class="label" id = "popularity-text">Overall number of posts: </span> <span class="badge"> 5</span> <span class= "glyphicon glyphicon-asterisk"> </span>  <!----------------- pet overall number of posts -------->
@@ -44,7 +44,7 @@
   <div class="panel-body">
   
   <ul>
-	<li></li>
+	
 	<li>{{category}}</li>
 	<li>{{description}}</li>
 
@@ -120,13 +120,14 @@
 After this we'd have a reddit-like list of posts
 
 <div id="posts">
-	<a href="{% url 'add_post' %}">Add a Post</a>
+		<a href="{% url 'add_post' slug %}">Add a Post</a>
     {% if posts %}
     <ul>
         {% for post in posts %}
 	<li><a href="{% url 'post' post.slug %}">{{ post.title }}</a></li>
 	<li>{{post.picture}}</li>
 	<li>{{post.description}}</li>
+	<li>{{post.tag}}</li>
 
         {% endfor %}
     </ul>

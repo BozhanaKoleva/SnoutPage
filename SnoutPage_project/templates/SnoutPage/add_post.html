@@ -3,14 +3,14 @@
 {% block body_block %}
 
 {% if user.is_authenticated %}
-Add:
+Add a post to {{pet.name}}:
 <ul>
-	<form id="PostForm" method="post" action ="{% url 'add_post' %}"/>
+	<form id="PostForm" method="post" action ="{% url 'add_post' pet.slug %}"/>
 	{% csrf_token %}
     <table>
         {{ form.as_table }}
     </table>
-	<input type="submit" name="submit" value="Add Post"/>
+	<input type="submit" name="submit" value="Add Post" action ="{% url 'pet' pet.slug %}"/>
 	</form>
 </ul>
 {% else %}

@@ -1,20 +1,23 @@
 {% extends 'SnoutPage/base.html' %}
-<div class="row marketing">
-			<div class="col-lg-6">
-				<h4>Categories</h4>
-				<p>
-		         	{% if categories %}
-		             <ul class="list-group">
-		                 {% for category in categories %}
-		                 	<li class="list-group-item"><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
-		                 {% endfor %}
-		             </ul>
-		        {% else %}
-		             <strong>There are no categories present.</strong>
-		        {% endif %}
-				
-				</p>
-
-			</div>
 {% load staticfiles %}
 
+{% block body_block %}
+<div class="row marketing">
+<div id="posts">
+
+    {% if posts %}
+    <ul>
+        {% for post in posts %}
+	<li><a href="{% url 'post' post.slug %}">{{ post.title }}</a></li>
+	<li>{{post.picture}}</li>
+	<li>{{post.description}}</li>
+	<li>{{post.tag}}</li>
+
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>page has no posts yet!.</strong><br/>
+    {% endif %}
+
+
+{% endblock %}

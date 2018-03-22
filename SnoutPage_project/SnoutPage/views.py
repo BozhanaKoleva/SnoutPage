@@ -13,7 +13,9 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     context_dict = {}
-    return render(request, 'SnoutPage/index.html', context = context_dict)
+    posts = Post.objects.all()
+    context_dict['posts'] = posts
+    return render(request, 'SnoutPage/index.html', context_dict)
 
 def userPage(request):
     context_dict = {}
@@ -241,22 +243,33 @@ def add_pet(request):
     return render(request, 'SnoutPage/add_pet.html', context_dict)
 
 
-def add_post(request, pet_name_slug=None):
+def add_post(request, pet_name_slug):
+    context_dict={}
+    print("add post")
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:
         pet = None
     form = PostForm()
     if request.method == 'POST':
+        print("post")
         form = PostForm(request.POST)
         if form.is_valid():
+            print("form valid")
             if pet:
+                print("pet is here")
                 post = form.save(commit=False)
-                post.author = self.request.user
+                post.pet = pet
+                post.author = request.user
                 post.category = pet.category
                 post.save()
-            return pet(request, pet_name_slug)
+                context_dict['slug']=pet_name_slug
+            
+            return render(request, 'SnoutPage/pet.html', context_dict)
+
+            
         else:
+            print("form errors")
             print(form.errors)
 
     context_dict = {'form':form, 'pet': pet}
