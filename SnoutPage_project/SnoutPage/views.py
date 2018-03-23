@@ -3,8 +3,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm
+from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -161,16 +161,15 @@ def pet(request, pet_name_slug):
 
 def post(request, post_title_slug):
     context_dict = {}
+    form = PostLikeForm()
+    context_dict['form'] = form
     try:
         post = Post.objects.get(slug=post_title_slug)
         liked_by_user = PostLike.objects.filter(post=post, liked = True, user = request.user)
         if liked_by_user:
-            #context_dict['message'] = "you have liked this post!"
-            context_dict['form'] = None
+            context_dict['not_liked_by_user'] = False
         else:
-            form = PostLikeForm(request.POST or None)
-            #context_dict['message'] = "like this post if you like it!"
-            context_dict['form'] = form
+            context_dict['not_liked_by_user'] = True
             if form.is_valid():
                 postlike = form.save(commit=False)
                 postlike.user = request.user
@@ -178,7 +177,7 @@ def post(request, post_title_slug):
                 postLike.save()
             else:
                 print(form.errors)
-
+        
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes
@@ -299,22 +298,34 @@ def search(request):
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
 
 #@login_required
-def show_user_page(request):
-    userdata = AdditonalUserData.objects.all
-    user = request.user
-    pets = Pet.objects.filter(owner=user)
-    pet_number = pets.count()
+def user_page(request, username):
     context_dict = {}
-
+    userdata = AdditonalUserData.objects.all
+    visitor = request.user
+    context_dict['visitor'] = visitor
     try:
-        user = User.objects.get(username = user.username)
+        user = User.objects.get(username = username)
+        
+        if visitor.username == user.username:
+            context_dict['authenticated'] = True
+            print ('it worked!')
+        else:
+            context_dict['authenticated'] = False
+            
+        pets = Pet.objects.filter(owner=user)
+        pet_number = pets.count()
+        context_dict['pet_number'] = pet_number
+        context_dict['pets'] = pets
+        context_dict['userdata'] = userdata
+        context_dict['user']=user
     except:
         print ('didnt work')
-    context_dict['pet_number'] = pet_number
-    context_dict['pets'] = pets
-    context_dict['userdata'] = userdata
-    context_dict['user']=user
+
+    
     return render(request, 'SnoutPage/user_page.html',context_dict)
+
+
+
 
 def edit_pet(request):
     return render(request,'SnoutPage/edit_pet.html',{})
@@ -377,26 +388,3 @@ def change_password(request):
         context_dict = {'form':form}
 
         return render(request,'SnoutPage/change-password.html',context_dict)
-
-
-def add_image(request): ## view saves image to database (see in admin panel)
-    form = ImageForm(request.POST or None, request.FILES or None)
-    imagedata = ImageTest.objects.all
-    if form.is_valid():
-        instance = form.save(commit =False)
-        instance.save()
-        return redirect("add_image")
-
-    imagedata = ImageTest.objects.all
-    user = request.user
-
-    c ={}
-    c['imagedata'] =imagedata
-    print imagedata
-    c["form"]=form
-    c['user']=user
-
-    print user.username
-    print imagedata.description
-
-    return render(request, "SnoutPage/add_image.html",c)

@@ -10,14 +10,27 @@
 	<li>{{picture}}</li>
 	<li>{{category}}</li>
 	<li>{{description}}</li>
-	<li> </li>
+	<li> {{pet.name}}</li>
 	<li> {{likes}}</li>
-	<li>{{created_date}}</li>`
-	<li> From {{author}}'s {{pet.name}}</li>
-	
-	
-
+	<li>{{created_date}}</li>
+	<li> {{author}} </li>
 </ul>
+	
+	<!-- {% if not_liked_by_user %}
+	<strong>Like this post if you like it!</strong><br/>
+<div id="like">
+<ul>
+	<form id="PostLikeForm" method="post" action ="{% url 'add_post' pet.slug %}"/>
+	{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+	<input type="submit" name="submit" value="Add Post" action ="{% url 'pet' pet.slug %}"/>
+	</form>
+</ul>
+{% else %}
+    <strong>You have liked this post!</strong><br/>
+    {% endif %} -->
   
     <div id="comments">
 

@@ -22,7 +22,7 @@ from SnoutPage import views
 app_name = 'SnoutPage'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^add_image',views.add_image,name= 'add_image'),
+    #url(r'^add_image',views.add_image,name= 'add_image'),
     url(r'^$', views.index, name = 'index'),
     url(r'^index/', views.index, name = 'index'),
     url(r'^accounts/', include('allauth.urls')),
@@ -32,9 +32,9 @@ urlpatterns = [
     url(r'^login/$', views.user_login, name = 'login'),
     url(r'^register/$',views.register, name = 'register'),
     url(r'^search/$',views.search, name = 'search'),
-    url(r'^show_user_page/$',views.show_user_page, name= 'show_user_page'),
+    #url(r'^show_user_page/$',views.show_user_page, name= 'show_user_page'),
     # url(r'^show_user_page/(P<pk>\d+)/$',views.show_user_page, name= 'show_user_page_with_pk'),
-    url(r'^show_user_page/(?P<username>[\w\-]+)/$', views.show_user_page, name='show_user_page'),
+    url(r'^user_page/(?P<username>[\w\-]+)/$', views.user_page, name='user_page'),
     #url(r'^pet/$',views.pet, name='pet'),
 ##    url(r'SnoutPage/(?P<pet_name_slug>[\w\-]+)/$',
 ##        views.pet, name='pet'),

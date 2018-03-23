@@ -30,7 +30,33 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 				<!-- --------------------- IF user profile: --------------->
+				{% if authenticated %}
+					<strong>hello to your profoile {{user.username}}!</strong>
+				{% else %}
+					<strong>wellcome to {{user.username}} profile!</strong>
+				{% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
 				<div>
 									<button class="btn btn-default btn-xs dropdown-toggle " type="button" data-toggle="dropdown">Edit User
@@ -52,6 +78,7 @@
 
 
 			    <!-- --------------------- Else: ---------------------- -->
+						
 				 <!-- --------------------- If already friends: -->
 								<a href="#removefriend" class="btn btn-danger	 btn-xs"> Remove Friend</a>
 				  <!-- --------------------- Else: Display add/remove friend button. -->
@@ -82,6 +109,7 @@
 {% endfor %}
 
 	<!-- -----------------------------------------------------------------------User Description -->
+							
   </blockquote>
   </div>
 	</div>
@@ -200,6 +228,8 @@ data.user {{data.user}}, user.username  {{user.username}} ||
 	<h3> {{ data.description}} </h3>
 {% endif %}
 {% endfor %}
+
+
 {% endblock %} --->
 
 
