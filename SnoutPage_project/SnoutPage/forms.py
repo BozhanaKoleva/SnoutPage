@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from SnoutPage.models import UserProfile, Pet, Comment,  Post, PostLike, AdditonalUserData #Page
+from SnoutPage.models import UserProfile, Pet, Comment,  Post, PostLike, AdditonalUserData, ImageTest #Page
 from SnoutPage.types import *
 
 from django.contrib.auth.forms import UserChangeForm
@@ -66,7 +66,7 @@ class PostForm(forms.ModelForm):
 ##    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
         model = Post
-        fields = ('title', 'description', 'tag', 'picture',)
+        fields = ('title', 'description', 'tag', 'picture','image')
 
 
 class PostLikeForm(forms.ModelForm):
@@ -87,3 +87,9 @@ class EditOtherDetails(forms.ModelForm):
     class Meta:
         model = AdditonalUserData
         fields = ('description','picture')
+
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = ImageTest
+        fields = ('description','image')

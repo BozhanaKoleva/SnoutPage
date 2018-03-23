@@ -3,8 +3,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData
+from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -178,7 +178,7 @@ def post(request, post_title_slug):
                 postLike.save()
             else:
                 print(form.errors)
-        
+
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes
@@ -377,3 +377,26 @@ def change_password(request):
         context_dict = {'form':form}
 
         return render(request,'SnoutPage/change-password.html',context_dict)
+
+
+def add_image(request): ## view saves image to database (see in admin panel)
+    form = ImageForm(request.POST or None, request.FILES or None)
+    imagedata = ImageTest.objects.all
+    if form.is_valid():
+        instance = form.save(commit =False)
+        instance.save()
+        return redirect("add_image")
+
+    imagedata = ImageTest.objects.all
+    user = request.user
+
+    c ={}
+    c['imagedata'] =imagedata
+    print imagedata
+    c["form"]=form
+    c['user']=user
+
+    print user.username
+    print imagedata.description
+
+    return render(request, "SnoutPage/add_image.html",c)

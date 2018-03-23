@@ -22,6 +22,7 @@ from SnoutPage import views
 app_name = 'SnoutPage'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^add_image',views.add_image,name= 'add_image'),
     url(r'^$', views.index, name = 'index'),
     url(r'^index/', views.index, name = 'index'),
     url(r'^accounts/', include('allauth.urls')),
