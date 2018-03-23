@@ -64,6 +64,7 @@ class Post(models.Model):
     pet = models.ForeignKey(Pet, default=None)
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
+    image =models.FileField(null = True, blank = True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -95,8 +96,18 @@ class AdditonalUserData(models.Model):
     picture = models.ImageField(upload_to='profile_images',blank=True)
     date = models.DateTimeField(default =timezone.now)
 
+class ImageTest(models.Model):
+    description = models.CharField(max_length=100, default ="")
+    image =models.FileField(null = True, blank = True)
 
+    class Meta:
+        verbose_name_plural= "Images"
 
+    def __str__(self):
+        return self.description
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.description)
+        super(ImageTest, self).save(*args, **kwargs)
 
 
 # Create your models here.

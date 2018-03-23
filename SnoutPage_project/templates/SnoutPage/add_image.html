@@ -1,0 +1,28 @@
+{% extends 'SnoutPage/base.html' %}
+{% load staticfiles %}
+{% block body_block %}
+
+
+
+
+<ul>
+	<form id="PostForm" method="post" enctype="multipart/form-data"/>
+	{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+	<input type="submit" name="submit" value="Add Post"/>
+	</form>
+</ul>
+{% endblock %}
+
+{{imagedata.description}}
+
+{{user.username}}
+{{ImageTest.image}}
+<ul>
+{% for image in ImageTest.all %}
+<li>
+sdssdsa
+</li>
+{% endfor %}
