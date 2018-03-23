@@ -42,9 +42,8 @@
 
 				<!-- --------------------- IF user profile: --------------->
 				{% if authenticated %}
-					<strong>hello to your profoile {{user.username}}!</strong>
 				{% else %}
-					<strong>wellcome to {{user.username}} profile!</strong>
+					<strong>Welcome to {{user.username}} profile!</strong>
 				{% endif %}
 
 
@@ -209,16 +208,6 @@
 </div>
 
 
-<div>
-	<h3> User List </h3>
-	{% for user in users %}
-	<a href = "{% url 'show_user_page' %}">
-	<h4>	{{user.username}}</h4>
-	</a>
-	{% endfor %}
-
-
-    </div>
 
 
 <!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -

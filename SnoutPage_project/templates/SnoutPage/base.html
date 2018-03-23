@@ -54,7 +54,7 @@
       {% if accounts %}
              <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-rounded" id = "userAvatar">
              {% else %}
-             {%if user.userprofile.Userpicture %}
+             {% if user.userprofile.Userpicture %}
              <img src = "{{user.userprofile.Userpicture.url}}" class="img-rounded" id = "userAvatar">
              {% endif %}
              {% endif %}

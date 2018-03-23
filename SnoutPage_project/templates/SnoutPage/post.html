@@ -5,16 +5,66 @@
 {% endblock %}
 
 {% block body_block %}
-    <ul>
-	<li>{{title}}</li>
-	<li>{{picture}}</li>
-	<li>{{category}}</li>
-	<li>{{description}}</li>
-	<li> {{pet.name}}</li>
-	<li> {{likes}}</li>
-	<li>{{created_date}}</li>
-	<li> {{author}} </li>
-</ul>
+<div class="panel panel-default">
+ <div class= "panel-heading">{{title}}</div>
+  <div class="panel-body" id = "post-body">
+  <img src= "{{picture}}" style = "height:500px text-align:center;" alt = "Post image">
+  <div class="panel panel-default">
+  <div class="panel-body">{{description}}</div>
+</div>
+  
+  </div>
+  
+  <div class="panel-footer">Posted on {{created_date}} from <a href="{% url 'user_page' author.username %}">{{author.username}}</a>
+  {% if comments %}
+  <!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">View comments</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comments</h4>
+      </div>
+      <div class="modal-body" id = "post-comment-modal-body">
+	  
+	  
+	  {% for comment in comments %}
+	
+	
+	 <div class="panel panel-default">
+  <div class="panel-body">{{comment.description}}</div>
+  <div class="panel-footer">Comment made by : <a href="{% url 'user_page' comment.author %}">{{comment.author}}</a> on {{comment.created_date}}</div>
+</div>
+
+        {% endfor %}
+	  
+	 
+
+
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+ 
+{% endif %}
+  
+  <a  href="{% url 'add_comment' slug  %}" class="btn btn-primary btn-sm pull-right" role="button">Add Comment</a>
+  
+  
+  
+  </div>
+</div>
+
 	
 	<!-- {% if not_liked_by_user %}
 	<strong>Like this post if you like it!</strong><br/>
@@ -32,20 +82,4 @@
     <strong>You have liked this post!</strong><br/>
     {% endif %} -->
   
-    <div id="comments">
-<a  href="{% url 'add_comment' slug  %}" class="btn btn-primary btn-sm pull-right" role="button">Add Comment</a>
-    {% if comments %}
-    <ul>
-        {% for comment in comments %}
-	<li>{{comment.author}}</li>
-	<li>{{comment.description}}</li>
-	<li>{{comment.created_date}}</li>
-
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>post has no comments yet!.</strong><br/>
-    {% endif %}
-
-    </div>
 {% endblock %}
