@@ -2,19 +2,43 @@
 {% load staticfiles %}
 
 {% block body_block %}
-<div class="row marketing">
-<div id="posts">
+
+
 
     {% if posts %}
-    <ul>
-        {% for post in posts %}
-	<li><a href="{% url 'post' post.slug %}">{{ post.title }}</a></li>
-	<li>{{post.picture}}</li>
+           
+		
+		 <div class="panel panel-default">
+      
+      <div class="panel-body" id = "index-post-list">
+	  <div class="list-group">
+	   {% for post in posts %}
+  
+  <div class="panel panel-default" id="index-post-wrap">
+  <div class="panel-body" id="index-post-wrap">
+   <a href="{% url 'post' post.slug %}"   class="list-group-item">
+  <img src= "{{post.picture}}" class= "img-circle" id ="index-post-pic">
+  {{ post.title }} - {{post.description}} 
+  </a>
+  
+  </div>
+  <div class="panel-footer">Posted on {{ post.created_date}} from {{post.author}}'s {{post.pet.category}} - {{post.pet.name}} </div>
+</div>
+  
+ 
+  
+  
+  
+	<!--<li><a href="{% url 'post' post.slug %}">{{ post.title }}</a></li>
+	<!--<li></li>
 	<li>{{post.description}}</li>
-	<li>{{post.tag}}</li>
+	<li>{{post.tag}}</li>-->
 
         {% endfor %}
-    </ul>
+		</div>
+	  </div>
+    </div>
+		 <
     {% else %}
     <strong>page has no posts yet!.</strong><br/>
     {% endif %}

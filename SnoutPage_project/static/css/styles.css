@@ -15,7 +15,8 @@ body {
 }
 /* ------------------------------------------------------------login style */
 #login-dp{
-    min-width: 250px;
+    min-
+	: 250px;
     padding: 14px 14px 0;
     overflow:hidden;
     background-color:rgba(255,255,255,.8);
@@ -244,4 +245,18 @@ img {
 	height:275px;
 	padding-top:2px;
 
+}
+
+#index-post-list{
+	height:690px;
+	overflow:auto;
+}
+
+#index-post-pic{
+	height:30px;
+}
+
+#index-post-wrap{
+	padding:0px;
+	margin:5px;
 }
