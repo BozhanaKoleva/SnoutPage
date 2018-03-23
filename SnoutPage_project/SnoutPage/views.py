@@ -181,6 +181,7 @@ def post(request, post_title_slug):
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes
+        context_dict['slug'] = post.slug
         context_dict['pet'] = post.pet
         context_dict['comments'] = comments
         context_dict['category'] = post.category
@@ -191,6 +192,7 @@ def post(request, post_title_slug):
         context_dict['created_date'] = post.created_date
     except Post.DoesNotExist:
         context_dict['pet'] = None
+        context_dict['slug'] = None
         context_dict['likes'] = None
         context_dict['comments'] = None
         context_dict['category'] = None
