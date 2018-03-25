@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout,update_session_auth_
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest
-from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm
+from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm, FollowForm
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -141,6 +141,13 @@ def pet(request, pet_name_slug):
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
         posts = Post.objects.filter(pet=pet)
+        post_number=posts.count()
+        comment_number=0
+        for post in posts:
+            comSum = Comment.objects.filter(post=post).count()
+            comment_number += comSum
+        context_dict['post_number'] = post_number
+        context_dict['comment_number'] = comment_number
         context_dict['slug'] = pet_name_slug
         context_dict['posts'] = posts
         context_dict['owner'] = pet.owner
@@ -149,6 +156,8 @@ def pet(request, pet_name_slug):
         context_dict['picture'] = pet.picture
         context_dict['description'] = pet.description
     except Pet.DoesNotExist:
+        context_dict['post_number'] = None
+        context_dict['comment_number'] = None
         context_dict['slug'] = None
         context_dict['posts'] = None
         context_dict['owner'] = None
@@ -165,14 +174,17 @@ def post(request, post_title_slug):
     context_dict['form'] = form
     try:
         post = Post.objects.get(slug=post_title_slug)
-        liked_by_user = PostLike.objects.filter(post=post, liked = True, user = request.user)
-        if liked_by_user:
-            context_dict['not_liked_by_user'] = False
-        else:
-            context_dict['not_liked_by_user'] = True
+        user = request.user
+        if user.id != None:
+            context_dict['user'] = user
+            liked_by_user = PostLike.objects.filter(post=post, liked = True, user = user)
+            if liked_by_user:
+                context_dict['not_liked_by_user'] = False
+            else:
+                context_dict['not_liked_by_user'] = True
             if form.is_valid():
                 postlike = form.save(commit=False)
-                postlike.user = request.user
+                postlike.user = user
                 postLike.post = post
                 postLike.save()
             else:
@@ -319,6 +331,17 @@ def user_page(request, username):
         context_dict['pets'] = pets
         context_dict['userdata'] = userdata
         context_dict['user']=user
+        form= FollowForm()
+        context_dict['form'] = form
+        if form.is_valid():
+            follow = form.save(commit=False)
+            follow.user = owner
+            follow.follower = user
+            follow.save
+            #return render(request, 'SnoutPage/user_page.html',context_dict)
+        else:
+            print(form.errors)
+        
     except:
         print ('didnt work')
 
