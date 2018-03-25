@@ -143,14 +143,24 @@ def pet(request, pet_name_slug):
         posts = Post.objects.filter(pet=pet)
         post_number=posts.count()
         comment_number=0
+        like_number=0
+        owner = pet.owner
+        user = request.user
+        if user.username==owner.username:
+            context_dict['authenticated'] = True
+        else:
+            context_dict['authenticated'] = False
         for post in posts:
             comSum = Comment.objects.filter(post=post).count()
+            likeSum = PostLike.objects.filter(post=post, liked=True).count()
             comment_number += comSum
+            like_number += likeSum
         context_dict['post_number'] = post_number
         context_dict['comment_number'] = comment_number
+        context_dict['like_number'] = like_number
         context_dict['slug'] = pet_name_slug
         context_dict['posts'] = posts
-        context_dict['owner'] = pet.owner
+        context_dict['owner'] = owner
         context_dict['name'] = pet.name
         context_dict['category'] = pet.category
         context_dict['picture'] = pet.picture
@@ -158,6 +168,7 @@ def pet(request, pet_name_slug):
     except Pet.DoesNotExist:
         context_dict['post_number'] = None
         context_dict['comment_number'] = None
+        context_dict['like_number'] = None
         context_dict['slug'] = None
         context_dict['posts'] = None
         context_dict['owner'] = None
@@ -189,7 +200,10 @@ def post(request, post_title_slug):
                 postLike.save()
             else:
                 print(form.errors)
+        else:
+            context_dict['user'] = None
 
+            
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes

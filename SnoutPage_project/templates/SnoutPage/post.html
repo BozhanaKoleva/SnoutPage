@@ -80,9 +80,9 @@
 </div>
  
 {% endif %}
-  
+{% if user %}
   <a  href="{% url 'add_comment' slug  %}" class="btn btn-primary btn-sm pull-right" role="button">Add Comment</a>
-  
+{% endif %}
   
   
   </div>

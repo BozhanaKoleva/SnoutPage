@@ -20,14 +20,15 @@
 <div class = "panel panel-default">
 <div class="panel-heading">Popularity stats</div>
 
-<span class="label" id = "popularity-text">Overall number of likes: </span> <span class="badge"> 5</span> <span class= "glyphicon glyphicon-thumbs-up"> </span> <!----------------- pet overall number of likes on pet's posts-------->
+<span class="label" id = "popularity-text">Overall number of likes: </span> <span class="badge"> {{like_number}} </span> <span class= "glyphicon glyphicon-thumbs-up"> </span> <!----------------- pet overall number of likes on pet's posts-------->
 
 <br>
 
-<span class="label" id = "popularity-text">Overall number of comments: </span> <span class="badge"> {{comment_number}} </span> <span class= "glyphicon glyphicon-comment"> </span>  <!----------------- pet overall number of comments on pet's posts -------->
+<span class="label" id = "popularity-text">Overall number of comments: </span> <span class="badge"> {{comment_number}} </span> <span class= "glyphicon glyphicon-comment"> </span>  <!----------------- pet overall number of comments on pet's posts --------> 
+{% if authenticated %}
 <a  href="{% url 'add_post' slug %}" class="btn btn-primary btn-sm pull-right" role="button">Add Post</a>
 <br>
-
+{% endif %}
 <span class="label" id = "popularity-text">Overall number of posts: </span> <span class="badge"> {{post_number}} </span> <span class= "glyphicon glyphicon-asterisk"> </span>  <!----------------- pet overall number of posts -------->
 
 
