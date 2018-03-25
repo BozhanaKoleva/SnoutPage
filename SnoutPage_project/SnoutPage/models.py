@@ -110,6 +110,12 @@ class ImageTest(models.Model):
         super(ImageTest, self).save(*args, **kwargs)
 
 
+class Follow (models.Model):
+   followed = models.CharField(max_length=13, choices=FOLLOW, default="NOT_FOLLOWING")
+   user = models.ForeignKey(User,  related_name='user')
+   follower = models.ForeignKey(User,  related_name='follower')
+
+
 # Create your models here.
 
 

@@ -303,18 +303,17 @@ def search(request):
 def user_page(request, username):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
-    visitor = request.user
-    context_dict['visitor'] = visitor
+    owner = User.objects.get(username = username)
+    context_dict['owner']=owner
     try:
-        user = User.objects.get(username = username)
-
-        if visitor.username == user.username:
+        user = request.user
+        
+        if owner.username == user.username:
             context_dict['authenticated'] = True
-            print ('it worked!')
         else:
             context_dict['authenticated'] = False
-
-        pets = Pet.objects.filter(owner=user)
+            
+        pets = Pet.objects.filter(owner=owner)
         pet_number = pets.count()
         context_dict['pet_number'] = pet_number
         context_dict['pets'] = pets
@@ -323,7 +322,7 @@ def user_page(request, username):
     except:
         print ('didnt work')
 
-
+    
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 
@@ -404,7 +403,7 @@ def add_image(request): ## view saves image to database (see in admin panel)
 
     c ={}
     c['imagedata'] =imagedata
-    print imagedata
+    print ("imagedata")
     c["form"]=form
     c['user']=user
 
