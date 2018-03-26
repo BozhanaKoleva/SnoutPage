@@ -25,7 +25,7 @@
 
 
 
-				
+
 
 				<img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
 
@@ -152,12 +152,12 @@
         <div class="item">
     {% endif %}
 
-
-		<!--<img src="{{pet.picture}}" alt="Picture of {{ pet.name }}"  href="{% url 'pet' pet.slug %}" id="carousel-pet-picture"> <!-- Pet's profile picture -->
-
+    {% if pet.picture %}
+		<img src="{{pet.picture.url}}" alt="Picture of {{ pet.name }}"  href="{% url 'pet' pet.slug %}" id="carousel-pet-picture"> <!-- Pet's profile picture -->
+    {%else %}
 
 		<img src="{% static "images/logo.png" %}" alt="Picture of {{ pet.name }}"  href="{% url 'pet' pet.slug %}" id="carousel-pet-picture"> <!-- TEMP EXAMPLE, REMOVE WHEN PET PICRURES WORK -->
-
+    {% endif %}
 
 	  <div class="carousel-caption" id = "carousel-pet-name">
 	  <blockquote>
@@ -195,8 +195,3 @@
 
 
 {% endblock %}
-
-
-
-
-

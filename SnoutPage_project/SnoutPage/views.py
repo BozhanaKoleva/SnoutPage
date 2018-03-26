@@ -270,7 +270,7 @@ def add_page(request):
 def add_pet(request):
     form = PetForm()
     if request.method == 'POST':
-        form = PetForm(request.POST)
+        form = PetForm(request.POST,request.FILES)
         if form.is_valid():
             pet = form.save(commit=False)
             pet.owner = request.user
