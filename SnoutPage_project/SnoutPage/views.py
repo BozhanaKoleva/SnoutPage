@@ -193,11 +193,13 @@ def post(request, post_title_slug):
                 context_dict['not_liked_by_user'] = False
             else:
                 context_dict['not_liked_by_user'] = True
-            if form.is_valid():
+
+            if request.method=='POST' and 'like' in request.POST:
                 postlike = form.save(commit=False)
                 postlike.user = user
-                postLike.post = post
-                postLike.save()
+                postlike.post = post
+                postlike.liked = True
+                postlike.save()
             else:
                 print(form.errors)
         else:

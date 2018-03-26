@@ -16,29 +16,42 @@
   </div>
   
   <div class="panel-footer">Posted on {{created_date}} from <a href="{% url 'user_page' author.username %}">{{author.username}}</a>
-  {% if comments %}
+  
 
 
 
 {% if user.is_authenticated %}
 {% if not_liked_by_user %}
-<form id="PostLikeForm" method="post"/>
+
+
+<form method='POST'>
+    {{form.as_p}}
+    <button type="submit" name="like">Like</button>
+    </form>
+
+
+
+
+
+
+<!-- <form id="PostLikeForm" method="post"/>
 {% csrf_token %}
 <table>
 {{ form.as_table }}
 </table>
 <input type="submit" name="submit" value="Like"/>
 </form>
+
 {% endif %}
 <strong>You have liked this post!</strong><br/>
 {% else %}
 <strong>Log in to like and comment on this post!</strong><br/>
-{% endif %}
+{% endif %} -->
 
 
 
 
-
+{% if comments %}
 
   <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">View comments</button>

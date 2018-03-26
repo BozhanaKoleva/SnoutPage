@@ -77,7 +77,7 @@ class PostForm(forms.ModelForm):
 class PostLikeForm(forms.ModelForm):
     class Meta:
         model = PostLike
-        fields = ('liked', )
+        fields = ()
 
 class EditUserForm(UserChangeForm):
     class Meta:
