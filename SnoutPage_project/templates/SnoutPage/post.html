@@ -11,9 +11,14 @@
     {% if image %}
   <img src=  '{{image.url}}' style = "height:500px text-align:center;" alt = "Post image">
   {% endif %}
+  
+  {% if description %}
     <div class="panel panel-default">
+	
+	
   <div class="panel-body">{{description}}</div>
 </div>
+     {% endif %}
   </div>
 
   <div class="panel-footer">Posted on {{created_date}} from <a href="{% url 'user_page' author.username %}">{{author.username}}</a> in <a href="{% url 'post_category' category %}">{{category}}</a></br>

@@ -24,8 +24,10 @@
      {% if post.image %}
   <img src= "{{post.image.url}}" class= "img-circle" id ="index-post-pic">
   {% endif %}
-  {{ post.title }} - {{post.description}}
-
+  {{ post.title }}
+  {% if post.description%}
+   - {{post.description}}
+  {% endif %}
   </a>
 
   </div>
