@@ -8,14 +8,16 @@
 <div class="panel panel-default">
  <div class= "panel-heading">{{title}}</div>
   <div class="panel-body" id = "post-body">
-  <img src= "{{picture}}" style = "height:500px text-align:center;" alt = "Post image">
-  <div class="panel panel-default">
+    {% if image %}
+  <img src=  '{{image.url}}' style = "height:500px text-align:center;" alt = "Post image">
+  {% endif %}
+    <div class="panel panel-default">
   <div class="panel-body">{{description}}</div>
 </div>
   </div>
-  
+
   <div class="panel-footer">Posted on {{created_date}} from <a href="{% url 'user_page' author.username %}">{{author.username}}</a> in <a href="{% url 'post_category' category %}">{{category}}</a></br>
-  
+
 
 
 
@@ -54,22 +56,22 @@
         <h4 class="modal-title">Comments</h4>
       </div>
       <div class="modal-body" id = "post-comment-modal-body">
-	  
-	  
+
+
 	  {% for comment in comments %}
-	
-	
+
+
 	 <div class="panel panel-default">
   <div class="panel-body">{{comment.description}}</div>
   <div class="panel-footer">Comment made by : <a href="{% url 'user_page' comment.author %}">{{comment.author}}</a> on {{comment.created_date}}</div>
 </div>
 
         {% endfor %}
-	  
-	 
 
 
-       
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -78,16 +80,16 @@
 
   </div>
 </div>
- 
+
 {% endif %}
 {% if user %}
   <a  href="{% url 'add_comment' slug  %}" class="btn btn-primary btn-sm pull-right" role="button">Add Comment</a>
 {% endif %}
-  
-  
+
+
   </div>
 </div>
 
-	
-  
+
+
 {% endblock %}

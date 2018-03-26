@@ -212,7 +212,7 @@ def post(request, post_title_slug):
         else:
             context_dict['user'] = None
 
-            
+
         comments = Comment.objects.filter(post=post)
         likes = PostLike.objects.filter(post=post, liked = True).count()
         context_dict['likes'] = likes
@@ -225,6 +225,7 @@ def post(request, post_title_slug):
         context_dict['tag'] = post.tag
         context_dict['author'] = post.author
         context_dict['created_date'] = post.created_date
+        context_dict['image']=post.image
     except Post.DoesNotExist:
         context_dict['pet'] = None
         context_dict['slug'] = None
@@ -236,6 +237,7 @@ def post(request, post_title_slug):
         context_dict['tag'] = None
         context_dict['author'] = None
         context_dict['created_date'] = None
+        context_dict['image']=None
 
 
     return render(request, 'SnoutPage/post.html', context_dict)
@@ -310,7 +312,7 @@ def add_post(request, pet_name_slug):
         pet = None
     form = PostForm()
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST,request.FILES)
         if form.is_valid():
             if pet:
                 post = form.save(commit=False)
@@ -323,6 +325,10 @@ def add_post(request, pet_name_slug):
         else:
             print(form.errors)
 
+    if request.method == 'POST':
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
     context_dict = {'form':form, 'pet': pet}
 
     return render(request, 'SnoutPage/add_post.html', context_dict)
@@ -342,12 +348,12 @@ def user_page(request, username):
     context_dict['owner']=owner
     try:
         user = request.user
-        
+
         if owner.username == user.username:
             context_dict['authenticated'] = True
         else:
             context_dict['authenticated'] = False
-            
+
         pets = Pet.objects.filter(owner=owner)
         pet_number = pets.count()
         context_dict['pet_number'] = pet_number
@@ -364,11 +370,11 @@ def user_page(request, username):
             #return render(request, 'SnoutPage/user_page.html',context_dict)
         else:
             print(form.errors)
-        
+
     except:
         print ('didnt work')
 
-    
+
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 
@@ -438,18 +444,21 @@ def change_password(request):
 
 def add_image(request): ## view saves image to database (see in admin panel)
     form = ImageForm(request.POST or None, request.FILES or None)
-    imagedata = ImageTest.objects.all
+    # imagedata = ImageTest.objects.all
     if form.is_valid():
         instance = form.save(commit =False)
         instance.save()
-        return redirect("add_image")
+    else:
+        print ('not valid form')
 
-    imagedata = ImageTest.objects.all
+    # imagedata = ImageTest.objects.all
+    imagedata = ImageTest.objects.filter(description ='this is a description5')
     user = request.user
 
     c ={}
     c['imagedata'] =imagedata
-    print ("imagedata")
+    print ("image data ")
+    print (imagedata)
     c["form"]=form
     c['user']=user
 

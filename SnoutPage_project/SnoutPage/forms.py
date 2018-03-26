@@ -71,7 +71,7 @@ class PostForm(forms.ModelForm):
 ##    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
         model = Post
-        fields = ('title', 'description', 'tag', 'picture','image')
+        fields = ('title', 'description', 'tag','image')
 
 
 class PostLikeForm(forms.ModelForm):

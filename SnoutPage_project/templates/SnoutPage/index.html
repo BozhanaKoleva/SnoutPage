@@ -6,29 +6,38 @@
 
 
     {% if posts %}
-           
-		
+
+
 		 <div class="panel panel-default">
-      
+
       <div class="panel-body" id = "index-post-list">
 	  <div class="list-group">
 	   {% for post in posts %}
-  
+
   <div class="panel panel-default" id="index-post-wrap">
   <div class="panel-body" id="index-post-wrap">
    <a href="{% url 'post' post.slug %}"   class="list-group-item">
+
   <img src= "{{post.picture}}" class= "img-circle" id ="index-post-pic">
   {{ post.title }} 
+
+     {% if post.image %}
+  <img src= "{{post.image.url}}" class= "img-circle" id ="index-post-pic">
+  {% endif %}
+  {{ post.title }} - {{post.description}}
+
   </a>
-  
+
   </div>
   <div class="panel-footer">Posted on {{ post.created_date}} from <a href="{% url 'user_page' post.author.username %}">{{post.author.username}}</a> 's
+
  <a href="{% url 'post_category' post.category %}">{{post.category}}</a> - <a href="{% url 'pet' post.pet.slug %}">{{post.pet.name}}</a> 
 
  
  </div>
 </div>
   
+
 
         {% endfor %}
 		</div>

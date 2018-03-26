@@ -5,7 +5,7 @@
 {% if user.is_authenticated %}
 Add a post to {{pet.name}}:
 <ul>
-	<form id="PostForm" method="post" action ="{% url 'add_post' pet.slug %}"/>
+	<form id="PostForm" method="post" action ="{% url 'add_post' pet.slug %}" enctype="multipart/form-data"/>
 	{% csrf_token %}
     <table>
         {{ form.as_table }}

@@ -64,7 +64,7 @@ class Post(models.Model):
     pet = models.ForeignKey(Pet, default=None)
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
-    image =models.FileField(null = True, blank = True)
+    image =models.FileField(null = True, blank = True,upload_to='post_images')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
