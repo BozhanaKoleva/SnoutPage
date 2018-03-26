@@ -46,7 +46,7 @@
   
   <blockquote>
 	
-	Pet's category: {{category}}
+	Pet's category: <a href="{% url 'post_category' category %}">{{category}}</a>
 	<br>
 	{{description}}
 	<br>

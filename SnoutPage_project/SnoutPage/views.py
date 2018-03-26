@@ -179,6 +179,13 @@ def pet(request, pet_name_slug):
 
     return render(request, 'SnoutPage/pet.html', context_dict)
 
+def post_category (request, category):
+    context_dict = {}
+    posts = Post.objects.filter(category=category)
+    context_dict ['posts'] = posts
+    return render(request, 'SnoutPage/post_category.html', context_dict)
+
+
 def post(request, post_title_slug):
     context_dict = {}
     form = PostLikeForm()
