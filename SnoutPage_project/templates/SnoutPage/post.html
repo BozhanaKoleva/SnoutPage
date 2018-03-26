@@ -12,7 +12,6 @@
   <div class="panel panel-default">
   <div class="panel-body">{{description}}</div>
 </div>
-  
   </div>
   
   <div class="panel-footer">Posted on {{created_date}} from <a href="{% url 'user_page' author.username %}">{{author.username}}</a> in <a href="{% url 'post_category' category %}">{{category}}</a></br>
@@ -23,18 +22,17 @@
 {% if user.is_authenticated %}
 {% if not_liked_by_user %}
 
-
 <form method='POST'>
     {{form.as_p}}
-    <button type="submit"  name="like">Like </button>
+    <button type="submit"  class="btn btn-primary btn-sm pull-right" name="like">Like </button>
     </form>
-
+<strong>The post has {{likes}} likes</strong>
 {% else %}
-<strong>You have liked this post!</strong><br/>
+<strong>You have liked this post!  The post has {{likes}} likes </strong>
 {% endif %}
 
 {% else %}
-<strong>Log in to like and comment on this post!</strong><br/>
+<strong>Log in to like and comment on this post!</strong>
 {% endif %}
 
 
@@ -52,7 +50,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal"></button>
         <h4 class="modal-title">Comments</h4>
       </div>
       <div class="modal-body" id = "post-comment-modal-body">

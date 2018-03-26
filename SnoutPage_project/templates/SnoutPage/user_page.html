@@ -8,61 +8,35 @@
 <div class="container-fluid" id = "user-page-top">
 
 
-  <div class="row">
+  <div class="row row-eq-height">
 	<div class="panel panel-default" >
-		<div class="panel-body">
+		<div id="blue-panel" class="panel-body">
 			<div class="col-sm-5" style="background-color:skyblue;" id = "user-page-top-content">
-
+	<div class = "well well-sm">
 			{% if accounts %}
 				<img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatar" alt ="Profile Picture" >
 				{% else %}
         {%if owner.userprofile.Userpicture %}
-				<img src = "{{owner.userprofile.Userpicture.url}}" class="img-thumbnail" id = "user-page-avatar">
+				<img src = "{{owner.userprofile.Userpicture.url}}" class="img-thumbnail" id = "user-page-avatarr">
 				{% endif %}
         {% endif %}
 
 
-				<div class = "well well-sm">
+
+
+
+				
 
 				<img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+
 
 				<h1 id = "user-page-username">{{owner.username}}</h1>
 
 
 
 
-
-
-
-
-
-
-
-
-
 				<!-- --------------------- IF user profile: --------------->
 				{% if authenticated %}
-					<strong>hello to your profoile {{user.username}}!</strong>
-				{% else %}
-					<strong>wellcome to {{owner.username}} profile!</strong>
-					
-		<form id="FollowForm" method="post"/>
-				{% csrf_token %}
-    				<table>
-        			{{ form.as_table }}
-    				</table>
-				<input type="submit" name="submit" value="Follow"/>
-							</form>
-					
-				{% endif %}
-
-
-
-
-
-
-
-
 
 
 
@@ -83,19 +57,20 @@
 													<li><a href="{% url 'edit_pet' %}">Edit Pet</a></li>
 											</ul>
 								</div>
-
+	{% else %}
 
 
 			    <!-- --------------------- Else: ---------------------- -->
-						
+
 				 <!-- --------------------- If already friends: -->
-								<a href="#removefriend" class="btn btn-danger	 btn-xs"> Remove Friend</a>
+								<a href="#removefriend" class="btn btn-danger  btn-xs"> Remove Friend</a>
 				  <!-- --------------------- Else: Display add/remove friend button. -->
 								<a href="#addfriend" class="btn btn-success	 btn-xs"> Add Friend</a>
-
+{% endif %}
 				</div>
 
 			</div>
+
 			<div class="col-sm-7" style="background-color:skyblue;" id= "user-page-top-content">
 
 
@@ -118,7 +93,7 @@
 {% endfor %}
 
 	<!-- -----------------------------------------------------------------------User Description -->
-							
+
   </blockquote>
   </div>
 	</div>
@@ -219,20 +194,9 @@
 
 
 
-
-<!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -
-{% for data in userdata %}
-data.user {{data.user}}, user.username  {{user.username}} ||
-{% if data.user == user.userprofile.user %}
-	<h3> {{ data.description}} </h3>
-{% endif %}
-{% endfor %}
-
-
-{% endblock %} --->
+{% endblock %}
 
 
 
 
-<!-- bit of a work in progress -  basically displays user posts( like a fb status)instead of description -->
 
