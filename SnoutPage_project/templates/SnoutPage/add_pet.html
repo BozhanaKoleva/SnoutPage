@@ -1,16 +1,22 @@
+
 {% extends 'SnoutPage/base.html' %}
 {% load staticfiles %}
 {% block body_block %}
 
 {% if user.is_authenticated %}
-Add:
+<h1 style="text-align:center;"> Add a Pet: </h1>
 <ul>
 	<form id="PetForm" method="post" action ="{% url 'add_pet' %}" enctype="multipart/form-data"/>
 	{% csrf_token %}
-    <table>
+	
+	
+  
+	  <table>
         {{ form.as_table }}
     </table>
-	<input type="submit" name="submit" value="Add Pet"/>
+
+ 
+	<input class="btn btn-default" type="submit" name="Add pet" value="Add Pet"/>
 	</form>
 </ul>
 {% else %}

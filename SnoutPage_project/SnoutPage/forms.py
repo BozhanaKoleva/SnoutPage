@@ -91,7 +91,7 @@ class EditUserForm(UserChangeForm):
 class EditOtherDetails(forms.ModelForm):
     class Meta:
         model = AdditonalUserData
-        fields = ('description','picture')
+        fields = ('description',)
 
 
 class ImageForm(forms.ModelForm):
