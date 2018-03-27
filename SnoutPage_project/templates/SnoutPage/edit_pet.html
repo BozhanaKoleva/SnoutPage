@@ -1,17 +1,25 @@
+
 {% extends 'SnoutPage/base.html' %}
 {% load staticfiles %}
 {% block body_block %}
 
-
-
-
-
-
-edit:
+{% if user.is_authenticated %}
+<h1 style="text-align:center;"> Add a Pet: </h1>
 <ul>
-	<li> Pet Picture</li>
-	<li> description</li>
-	<li> tags</li>
-</ul>
+	<form id="PetForm" method="post" action ="{% url 'add_pet' %}" enctype="multipart/form-data"/>
+	{% csrf_token %}
+	
+	
+  
+	  <table>
+        {{ form.as_table }}
+    </table>
 
+ 
+	<input class="btn btn-default" type="submit" name="Add pet" value="Add Pet"/>
+	</form>
+</ul>
+{% else %}
+    <strong>User not authenticated.</strong><br/>
+    {% endif %}
 {% endblock %}

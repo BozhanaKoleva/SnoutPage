@@ -31,6 +31,8 @@
 {% if authenticated %}
 <a  href="{% url 'add_post' slug %}" class="btn btn-primary btn-sm pull-right" role="button">Add Post</a>
 <br>
+<a  href="{% url 'edit_pet' slug %}" class="btn btn-primary btn-sm pull-right" role="button">Edit Pet</a>
+<br>
 {% endif %}
 <span class="label" id = "popularity-text">Overall number of posts: </span> <span class="badge"> {{post_number}} </span> <span class= "glyphicon glyphicon-asterisk"> </span>  <!----------------- pet overall number of posts -------->
 
