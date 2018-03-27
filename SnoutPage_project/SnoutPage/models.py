@@ -46,7 +46,7 @@ class Pet(models.Model):
     category = models.CharField(max_length=6, choices=TYPES, default="DOG")
     owner = models.ForeignKey(User, default=None)
     name = models.CharField(max_length=120, unique=True)
-    picture = models.ImageField(upload_to='pet_profile_images',blank=True)
+    picture = models.FileField(upload_to='pet_profile_images',blank=True)
     description = models.CharField(max_length=600, blank=True)
     def __str__(self):
         return self.name

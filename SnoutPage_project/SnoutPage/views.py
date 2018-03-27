@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest
+from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest, Follow
 from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm, FollowForm
 from django.template.defaultfilters import slugify
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
@@ -207,6 +207,7 @@ def post(request, post_title_slug):
                 postlike.post = post
                 postlike.liked = True
                 postlike.save()
+                return HttpResponseRedirect('/')
             else:
                 print(form.errors)
         else:
@@ -270,11 +271,12 @@ def add_page(request):
 def add_pet(request):
     form = PetForm()
     if request.method == 'POST':
-        form = PetForm(request.POST)
+        form = PetForm(request.POST,request.FILES)
         if form.is_valid():
             pet = form.save(commit=False)
             pet.owner = request.user
             pet.save()
+            return HttpResponseRedirect('/')
         else:
             print(form.errors)
 
@@ -297,7 +299,7 @@ def add_comment(request, post_title_slug):
                 comment.author = request.user
                 comment.post = post
                 comment.save()
-            return render(request, 'SnoutPage/post.html', context_dict)
+            return HttpResponseRedirect('/')
         else:
             print(form.errors)
     context_dict = {'form':form, 'post': post}
@@ -321,7 +323,7 @@ def add_post(request, pet_name_slug):
                 post.category = pet.category
                 post.save()
                 context_dict['slug']=pet_name_slug
-            return render(request, 'SnoutPage/pet.html', context_dict)
+            return HttpResponseRedirect('/')
         else:
             print(form.errors)
 
@@ -334,8 +336,8 @@ def add_post(request, pet_name_slug):
     return render(request, 'SnoutPage/add_post.html', context_dict)
 
 
-def search(request):
-
+def search(request, ):
+    
     result_list = []
 
     return render(request, 'SnoutPage/base.html', {'result_list': result_list})
@@ -367,6 +369,7 @@ def user_page(request, username):
             follow.user = owner
             follow.follower = user
             follow.save
+            return HttpResponseRedirect('/')
             #return render(request, 'SnoutPage/user_page.html',context_dict)
         else:
             print(form.errors)

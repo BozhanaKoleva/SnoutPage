@@ -6,13 +6,15 @@
 
 <div class= "row">
 <div class = "col-xs-5">
-<img src = "{{picture}}">
+{% if picture %}
+<img src = "{{picture.url}}"alt = "pet pic">
+{% endif %}
 </div>
 <div class="col-xs-7">
 
 <div class="container">
   <div id = "pet-name-jumbo"class="jumbotron">
-   <h1>{{name}}</h1>	
+   <h1>{{name}}</h1>
   </div>
 </div>
 
@@ -24,7 +26,7 @@
 
 <br>
 
-<span class="label" id = "popularity-text">Overall number of comments: </span> <span class="badge"> {{comment_number}} </span> <span class= "glyphicon glyphicon-comment"> </span>  <!----------------- pet overall number of comments on pet's posts --------> 
+<span class="label" id = "popularity-text">Overall number of comments: </span> <span class="badge"> {{comment_number}} </span> <span class= "glyphicon glyphicon-comment"> </span>  <!----------------- pet overall number of comments on pet's posts -------->
 {% if authenticated %}
 <a  href="{% url 'add_post' slug %}" class="btn btn-primary btn-sm pull-right" role="button">Add Post</a>
 <br>
@@ -43,21 +45,21 @@
 <div class="panel panel-default"  id = "pet-panel-panel" >
   <div class="panel-heading" id = "pet-posts-label">Pet's description</div>
   <div class="panel-body">
-  
+
   <blockquote>
-	
+
 	Pet's category: <a href="{% url 'post_category' category %}">{{category}}</a>
 	<br>
 	{{description}}
 	<br>
-	
+
 	 Owned by: <a href="{% url 'user_page' owner.username %}">{{owner}}</a>
-	
+
 
 	</blockquote>
 
-  
-  
+
+
 </div>
 </div>
 </div>
@@ -70,19 +72,19 @@
 <div class="panel panel-default" id = "pet-panel-panel" >
   <div class="panel-heading" id = "pet-posts-label">Pet's posts</div>
   <div class="panel-body" id = "pet-panel-post-body">
-  
+
    <!-- Trigger the modal with a button -->
  <!-- For Post create a link ----------------------------------------------->
- 
+
   {% if posts %}
-  
+
         {% for post in posts %}
-	
+
    <div class="list-group">
   <!--<a href="{% url 'post' post.slug %}" data-toggle="modal" data-target="#myModal"  class="list-group-item">{{ post.title }}</a>-->
   <a href="{% url 'post' post.slug %}"   class="list-group-item">{{ post.title }}</a>
 
-  
+
   <!-- Trigger the modal with a button -->
  <!-- For Post create a link ----------------------------------------------->
 
@@ -97,7 +99,7 @@
         <h4 class="modal-title">{{ post.title }}</h4>
       </div>
       <div class="modal-body">
-	  <img src= "{{post.picture}}">
+	  <img src= "{{post.image.url}}">
         <p>{{post.description}}</p>
       </div>
       <div class="modal-footer">
@@ -108,9 +110,9 @@
 
   </div>
 </div>
-  
+
    {% endfor %}
-   </div> 
+   </div>
   {% else %}
    <h1 align="center"><mark>{{name}} has no posts yet.<mark></h1>
     {% endif %}
