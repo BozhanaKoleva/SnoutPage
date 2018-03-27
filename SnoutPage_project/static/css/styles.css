@@ -109,14 +109,11 @@ margin-left: -15px;
 	padding-left:20px;
 }
 
-#mobilefix{
-	margin-left:5px;
-}
 
 }
 
 #user-page-avatar{
-	height:200px;
+	height:40vh;
 	display: block;
     margin-left: auto;
     margin-right: auto;
@@ -148,7 +145,7 @@ margin-left: -15px;
 }
 
 #user-page-top-content{
-	 height:100%;
+	 height:45vh;
 	 
 }
 
@@ -205,7 +202,7 @@ img {
 	overflow:auto;
 }
 #user-page-avatarr{
-	height:222px;
+	height:30vh;
 	display: block;
     margin-left: auto;
     margin-right: auto;
@@ -214,7 +211,7 @@ img {
 }
 
 #carousel-pet-picture{
-	height:230px;
+	height:30vh;
 	margin-left:45%;
 }
 
@@ -251,7 +248,7 @@ img {
 }
 
 #index-post-list{
-	height:690px;
+	height:93vh;
 	overflow:auto;
 }
 
@@ -276,6 +273,7 @@ img {
 
 #blue-panel{
 	background-color:skyblue;
+	height:50vh;
 }
 
 #post-image{
@@ -286,18 +284,18 @@ img {
 }
 
 #category-list-panel{
-	height:350px;
+	height:60vh;
 }
 
 #category{
     transform: rotate(25deg);
 	border-left: solid black;
-	height:300px;
+	height:50vh;
 }
 
 #category2{
     transform: rotate(25deg);
-	height:300px;
+	height:50vh;
 }
 
 #anti-rotate > a{
@@ -306,6 +304,15 @@ img {
 	
 #anti-rotate{
 	transform: rotate(-25deg);
+}
+
+#pet-profile-pic{
+	height:35vh;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+	
 }
 
 

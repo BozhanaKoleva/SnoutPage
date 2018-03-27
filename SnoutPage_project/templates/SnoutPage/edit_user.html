@@ -7,25 +7,11 @@
 
 <form method ='post'>
 {% csrf_token %}
-<div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email">
-  </div>
-  <div class="form-group">
-    <label for="name">First Name:</label>
-    <input type="text" class="form-control" id="first_name">
-  </div>
-  <div class="form-group">
-    <label for="surname">Last Name:</label>
-    <input type="text" class="form-control" id="last_name">
-  </div>
-  
+ <table>
+        {{ form.as_table }}
+    </table>
 
-  <button type="submit" class="btn btn-default">Submit</button>
-  <a href="#changePass" class="btn btn-info" data-toggle="collapse">Change Password</a>
-  <div id="changePass" class="collapse">
-    Raw passwords are not stored, so there is no way to see this user's password, but you can change the password using <a href="{% url 'change_password' %}">this form.</a>
-  </div>
+  <button type="submit" class="btn btn-default">Change details</button>
 </form>
 
 

@@ -8,7 +8,7 @@
 <div class = "col-xs-5">
 
 {% if picture %}
-<img src = "{{picture.url}}"alt = "pet pic">
+<img id ="pet-profile-pic" src = "{{picture.url}}"alt = "pet pic">
 {% endif %}
 </div>
 <div class="col-xs-7">
@@ -49,12 +49,18 @@
   
   <blockquote>
 	
-	Pet's category: <a href="{% url 'post_category' category %}">{{category}}</a>
-	<br>
+	{% if description %}
+	
 	{{description}}
 	<br>
+	{% endif %}
 	
-	 Owned by: <a href="{% url 'user_page' owner.username %}">{{owner}}</a>
+	
+	Owned by: <a href="{% url 'user_page' owner.username %}">{{owner}}</a>
+	<br>
+	Pet's category: <a href="{% url 'post_category' category %}">{{category}}</a>
+	
+	
 	
 
 	</blockquote>
@@ -100,7 +106,9 @@
         <h4 class="modal-title">{{ post.title }}</h4>
       </div>
       <div class="modal-body">
+	  {%if post.image %}
 	 <img src= "{{post.image.url}}">
+	 {% endif %}
         <p>{{post.description}}</p>
       </div>
       <div class="modal-footer">
