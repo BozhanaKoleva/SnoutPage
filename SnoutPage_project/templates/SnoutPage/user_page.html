@@ -51,7 +51,11 @@
 											<ul class="dropdown-menu">
 												<li><a href="{% url 'edit_user' %}">Edit login details</a></li>
 													<li><a href = "{% url 'add_info' %}"> Add a Status</a></li>
+                          {% if imagedata.image %}
+                          {% else %}
 													<li><a href="{% url 'add_image' %}">Add/Change profile picture</a></li>
+                          {% endif %}
+								
 											</ul>
 
 
