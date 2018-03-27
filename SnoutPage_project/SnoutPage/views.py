@@ -398,14 +398,16 @@ def add_post(request, pet_name_slug):
     return render(request, 'SnoutPage/add_post.html', context_dict)
 
 def search(request):
-
+    user_list = User.objects.all()
     post_list = Post.objects.all()
     query = request.GET.get('search')
-    if query:
+    if query != "":
         post_list = Post.objects.filter(Q(title__icontains=query))
-
-
-    context_dict = {'posts': post_list}
+        user_list = User.objects.filter(Q(username__istartswith=query))
+    else:
+        post_list = []
+        user_list = []
+    context_dict = {'posts': post_list, 'query':query, 'users' :user_list}
     return render(request, 'SnoutPage/search.html', context=context_dict)
 
 

@@ -27,7 +27,7 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 ## this is the key to use for django allauth
 SECRET_KEY = 'baf0b01f7410980bb5b2e2078c31e82d'
-CLIENT_ID = 159337901440311s
+CLIENT_ID = 159337901440311
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
