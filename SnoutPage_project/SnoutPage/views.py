@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest, Follow
 from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm, FollowForm
 from django.template.defaultfilters import slugify
+from django.db.models import Q
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -115,8 +116,13 @@ def show_category(request, category_name_slug):
     # Create a context dictionary that we can pass
     # to the template rendering engine.
     context_dict = {}
+    query=request.GET.get('search')
     try:
         category = Category.objects.get(slug=category_name_slug)
+        if query:
+            posts = Post.objects.filter(category=category and Q(title_icontains=query))
+        else:
+            posts = Post.objects.filter(category=category)
         pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
         context_dict['category'] = category
@@ -125,14 +131,13 @@ def show_category(request, category_name_slug):
         context_dict['category'] = None
         context_dict['pages'] = None
 
-        context_dict['query'] = category.name
-        result_list = []
-        if request.method == 'POST':
-            query = request.POST['query'].strip()
-            if query:
-                result_list = run_query(query)
-                context_dict['query'] = query
-                context_dict['result_list'] = result_list
+#        context_dict['query'] = category.name
+#       result_list = []
+#        if request.method == 'POST':
+#            query = request.POST['query'].strip()
+#            if query:                result_list = run_query(query)
+ #               context_dict['query'] = query
+  #              context_dict['result_list'] = result_list
 
     return render(request, 'SnoutPage/category.html', context_dict)
 
@@ -336,11 +341,17 @@ def add_post(request, pet_name_slug):
     return render(request, 'SnoutPage/add_post.html', context_dict)
 
 
-def search(request, ):
-    
-    result_list = []
+def search(request):
 
-    return render(request, 'SnoutPage/base.html', {'result_list': result_list})
+    post_list = Post.objects.all()
+    query = request.GET.get('search')
+    if query:
+        post_list = Post.objects.filter(Q(title__icontains=query))
+
+
+    context_dict = {'posts': post_list}
+    return render(request, 'SnoutPage/search.html', context=context_dict)
+
 
 #@login_required
 def user_page(request, username):
@@ -468,3 +479,14 @@ def add_image(request): ## view saves image to database (see in admin panel)
 
 
     return render(request, "SnoutPage/add_image.html",c)
+
+
+def show_post(request, post_title_slug):
+    context_dict = {}
+    try:
+        post = Post.objects.get(slug=post_title_slug)
+        context_dict['post'] = post
+    except:
+        context_dict['post'] = None
+    return render(request, 'SnoutPage/post.html', context_dict)
+

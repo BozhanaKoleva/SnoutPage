@@ -46,7 +46,7 @@ class Pet(models.Model):
     category = models.CharField(max_length=6, choices=TYPES, default="DOG")
     owner = models.ForeignKey(User, default=None)
     name = models.CharField(max_length=120, unique=True)
-    picture = models.FileField(upload_to='pet_profile_images',blank=True)
+    picture = models.ImageField(upload_to='pet_profile_images',blank=True)
     description = models.CharField(max_length=600, blank=True)
     def __str__(self):
         return self.name
@@ -64,7 +64,7 @@ class Post(models.Model):
     pet = models.ForeignKey(Pet, default=None)
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
-    image =models.FileField(null = True, blank = True,upload_to='post_images')
+    image =models.FileField(null = True, blank = True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
