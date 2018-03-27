@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load account socialaccount %}
-{% get_providers as socialaccount_providers %}}
+{% if user.is_anonymous%}
+{%else%}
 {% load socialaccount %}
+{% get_social_accounts user as accounts %}
 {% get_providers as socialaccount_providers %}
-
+{%endif%}
 
 
 
@@ -56,8 +57,11 @@
 
 		<li>
       {% if user.is_authenticated %}
+      {% load socialaccount %}
+      {% get_social_accounts user as accounts %}
+      {% get_providers as socialaccount_providers %}
       {% if accounts %}
-      <img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}"  class="img-rounded" id = "userAvatar">
+      <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}"  class="img-rounded" id = "userAvatar">
       {% else %}
       {% if imagedata.image %}
       <img src = "{{imagedata.image.url}}"class="img-thumbnail"  class="img-rounded" id = "userAvatar">

@@ -2,7 +2,9 @@
 {% load staticfiles %}
 
 {% block body_block %}
-
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+{% get_providers as socialaccount_providers %}
 
 
 <div class="container-fluid" id = "user-page-top">
@@ -14,21 +16,21 @@
 			<div class="col-sm-5" style="background-color:skyblue;" id = "user-page-top-content">
 	<div  id = "user-page-top-content" class = "well well-sm">
     {% if accounts %}
-        <img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
-        {% else %}
-        {% if imagedata.image %}
-        <img src = "{{imagedata.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
-        {% endif %}
+    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+  {% else %}
+  {% if imagedata.image %}
+  <img src = "{{imagedata.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+  {% endif %}
 
-        {% endif %}
-
-
+  {% endif %}
 
 
 
 
 
-				
+
+
+
 
 
 				<h1 id = "user-page-username">{{owner.username}}</h1>
