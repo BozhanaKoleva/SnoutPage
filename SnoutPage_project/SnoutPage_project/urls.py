@@ -47,13 +47,11 @@ urlpatterns = [
     url(r'^add_post/(?P<pet_name_slug>[\w\-]+)/$', views.add_post, name = 'add_post'),
     url(r'^add_comment/(?P<post_title_slug>[\w\-]+)/$', views.add_comment, name = 'add_comment'),
     url(r'SnoutPage/pet/(?P<pet_name_slug>[\w\-]+)/$', views.pet, name='pet'),
-<<<<<<< HEAD
     url(r'^post/(?P<post_title_slug>[\w\-]+)/$', views.post, name='post'),
-    url(r'SnoutPage/post_category/(?P<category>[\w\-]+)/$', views.post_category, name='post_category',)
-=======
+    url(r'SnoutPage/post_category/(?P<category>[\w\-]+)/$', views.post_category, name='post_category',),
     url(r'SnoutPage/post/(?P<post_title_slug>[\w\-]+)/$', views.post, name='post'),
     url(r'SnoutPage/post_category/(?P<category>[\w\-]+)/$', views.post_category, name='post_category',),
     url(r'SnoutPage/edit_pet/(?P<pet_name_slug>[\w\-]+)/$', views.edit_pet, name='edit_pet',)
->>>>>>> 8ca9e8d95dabef27a508d8731b3d9da3b189e0c4
+
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
    # url(r'^connect/(?P<parameter>.+)/(?P<pk>\d+)/$',views.update_friends, name= 'update_friends')
