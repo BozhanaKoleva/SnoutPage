@@ -33,7 +33,7 @@
 	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a id = "logoLink"class="navbar-brand" href="{% url 'index' %}"><img class = "img-rounded" id = "logo" src="{% static "images/logo.png" %}"></a>
     </div>
@@ -57,16 +57,16 @@
 		<li>
       {% if user.is_authenticated %}
       {% if accounts %}
-             <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-rounded" id = "userAvatar">
-             {% else %}
-             {% if user.userprofile.Userpicture %}
-             <img src = "{{user.userprofile.Userpicture.url}}" class="img-rounded" id = "userAvatar">
-             {% endif %}
-             {% endif %}
+      <img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}"  class="img-rounded" id = "userAvatar">
+      {% else %}
+      {% if imagedata.image %}
+      <img src = "{{imagedata.image.url}}"class="img-thumbnail"  class="img-rounded" id = "userAvatar">
+      {% endif %}
+      {% endif %}
 
 
 		<li><a href = "{% url 'user_page' user.username %}">User Profile</a></li> <!-- Link to user profile-->
-		
+
 		<li>
 			<a href ="{% url 'logout' %}">Logout</a> <!-- Link to Logout page-->
      </ul>
