@@ -23,7 +23,11 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b-bns&g+v!__7k)o0k6i@drgk6cr1=5yc%fi7u3*d$m3bu(rco'
+# SECRET_KEY = 'b-bns&g+v!__7k)o0k6i@drgk6cr1=5yc%fi7u3*d$m3bu(rco'
+
+## this is the key to use for django allauth
+SECRET_KEY = 'baf0b01f7410980bb5b2e2078c31e82d'
+CLIENT_ID = 159337901440311s
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

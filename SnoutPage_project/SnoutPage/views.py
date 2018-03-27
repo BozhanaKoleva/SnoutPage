@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from SnoutPage.models import UserProfile, Pet, Post, PostLike, Comment, AdditonalUserData,ImageTest, Follow
 from SnoutPage.forms import UserForm, UserProfileForm, PostForm, PetForm, CommentForm, EditUserForm, PostLikeForm,EditOtherDetails, AdditonalUserData,ImageForm, FollowForm
 from django.template.defaultfilters import slugify
+from django.db.models import Q
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,7 @@ def index(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     posts = Post.objects.all()
     context_dict['posts'] = posts
     return render(request, 'SnoutPage/index.html', context_dict)
@@ -119,14 +120,20 @@ def show_category(request, category_name_slug):
     # Create a context dictionary that we can pass
     # to the template rendering engine.
     context_dict = {}
+    query=request.GET.get('search')
     userdata = AdditonalUserData.objects.all
     try:
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
+
     try:
         category = Category.objects.get(slug=category_name_slug)
+        if query:
+            posts = Post.objects.filter(category=category and Q(title_icontains=query))
+        else:
+            posts = Post.objects.filter(category=category)
         pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
         context_dict['category'] = category
@@ -135,14 +142,13 @@ def show_category(request, category_name_slug):
         context_dict['category'] = None
         context_dict['pages'] = None
 
-        context_dict['query'] = category.name
-        result_list = []
-        if request.method == 'POST':
-            query = request.POST['query'].strip()
-            if query:
-                result_list = run_query(query)
-                context_dict['query'] = query
-                context_dict['result_list'] = result_list
+#        context_dict['query'] = category.name
+#       result_list = []
+#        if request.method == 'POST':
+#            query = request.POST['query'].strip()
+#            if query:                result_list = run_query(query)
+ #               context_dict['query'] = query
+  #              context_dict['result_list'] = result_list
 
     return render(request, 'SnoutPage/category.html', context_dict)
 
@@ -153,7 +159,7 @@ def pet(request, pet_name_slug):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
         posts = Post.objects.filter(pet=pet)
@@ -202,7 +208,7 @@ def post_category (request, category):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     posts = Post.objects.filter(category=category)
     context_dict ['posts'] = posts
     return render(request, 'SnoutPage/post_category.html', context_dict)
@@ -215,7 +221,7 @@ def post(request, post_title_slug):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     form = PostLikeForm()
     context_dict['form'] = form
     try:
@@ -279,7 +285,7 @@ def add_page(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
 ##    try:
 ##        category = Category.objects.get(slug=category_name_slug)
 ##    except Category.DoesNotExist:
@@ -310,7 +316,7 @@ def add_pet(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     form = PetForm()
     if request.method == 'POST':
         form = PetForm(request.POST,request.FILES)
@@ -333,7 +339,7 @@ def add_comment(request, post_title_slug):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     try:
         post = Post.objects.get(slug=post_title_slug)
     except Post.DoesNotExist:
@@ -362,7 +368,7 @@ def add_post(request, pet_name_slug):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:
@@ -391,12 +397,17 @@ def add_post(request, pet_name_slug):
 
     return render(request, 'SnoutPage/add_post.html', context_dict)
 
+def search(request):
 
-def search(request, ):
+    post_list = Post.objects.all()
+    query = request.GET.get('search')
+    if query:
+        post_list = Post.objects.filter(Q(title__icontains=query))
 
-    result_list = []
 
-    return render(request, 'SnoutPage/base.html', {'result_list': result_list})
+    context_dict = {'posts': post_list}
+    return render(request, 'SnoutPage/search.html', context=context_dict)
+
 
 #@login_required
 def user_page(request, username):
@@ -406,7 +417,7 @@ def user_page(request, username):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     owner = User.objects.get(username = username)
     context_dict['owner']=owner
     try:
@@ -451,7 +462,7 @@ def edit_pet(request, pet_name_slug):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:
@@ -482,7 +493,7 @@ def category_list(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     context_dict={}
     context_dict['DOG'] = 'DOG'
     context_dict['CAT'] = 'CAT'
@@ -499,7 +510,7 @@ def edit_user(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     if request.method=='POST':
         form = PasswordChangeForm(request.POST,instance =request.user)
         if form.is_valid():
@@ -517,7 +528,7 @@ def add_info(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     #if request.method =='POST':
     form= EditOtherDetails(request.POST)
     context_dict ={'form':form}
@@ -548,7 +559,7 @@ def change_password(request):
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
     if request.method=='POST':
         form = PasswordChangeForm(data=request.POST,user =request.user)
         if form.is_valid():
@@ -583,9 +594,20 @@ def add_image(request): ## view saves image to database (see in admin panel)
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
     except:
-        print 'no user picture found'
+        print ('no user picture found')
 
     context_dict["form"]=form
     context_dict['user']=request.user
+    return render(request, "SnoutPage/add_image.html")
 
-    return render(request, "SnoutPage/add_image.html",context_dict)
+
+def show_post(request, post_title_slug):
+    context_dict = {}
+    try:
+        post = Post.objects.get(slug=post_title_slug)
+        context_dict['post'] = post
+    except:
+        context_dict['post'] = None
+    return render(request, 'SnoutPage/post.html', context_dict)
+
+
