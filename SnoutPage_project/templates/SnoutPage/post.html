@@ -9,16 +9,11 @@
  <div class= "panel-heading">{{title}}</div>
   <div class="panel-body" id = "post-body">
     {% if image %}
-  <img  class = "img-rounded" id ="post-image" src= '{{image.url}}' style = "text-align:center;" alt = "Post image">
+  <img src=  '{{image.url}}' style = "height:500px text-align:center;" alt = "Post image">
   {% endif %}
-  
-  {% if description %}
     <div class="panel panel-default">
-	
-	
   <div class="panel-body">{{description}}</div>
 </div>
-     {% endif %}
   </div>
 
   <div class="panel-footer">Posted on {{created_date}} from <a href="{% url 'user_page' author.username %}">{{author.username}}</a> in <a href="{% url 'post_category' category %}">{{category}}</a></br>
@@ -31,7 +26,7 @@
 
 <form method='POST'>
     {{form.as_p}}
-    <button type="submit"  class="btn btn-primary btn-sm pull-right" name="like">Like </button>
+    <button type="submit"  class="btn btn-primary btn-sm pull-right" name="like">Like</button>
     </form>
 <strong>The post has {{likes}} likes</strong>
 {% else %}

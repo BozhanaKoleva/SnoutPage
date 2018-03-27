@@ -98,7 +98,8 @@ class AdditonalUserData(models.Model):
 
 class ImageTest(models.Model):
     description = models.CharField(max_length=100, default ="")
-    image =models.FileField(null = True, blank = True)
+    image =models.FileField(null = True, blank = True,upload_to ="profile_images")
+    user = models.ForeignKey(User)
 
     class Meta:
         verbose_name_plural= "Images"

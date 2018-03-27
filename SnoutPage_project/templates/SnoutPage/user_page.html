@@ -2,7 +2,9 @@
 {% load staticfiles %}
 
 {% block body_block %}
-
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+{% get_providers as socialaccount_providers %}
 
 
 <div class="container-fluid" id = "user-page-top">
@@ -13,21 +15,22 @@
 		<div id="blue-panel" class="panel-body">
 			<div class="col-sm-5" style="background-color:skyblue;" id = "user-page-top-content">
 	<div  id = "user-page-top-content" class = "well well-sm">
-			{% if accounts %}
-				<img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatar" alt ="Profile Picture" >
-				{% else %}
-        {%if owner.userprofile.Userpicture %}
-				<img src = "{{owner.userprofile.Userpicture.url}}" class="img-thumbnail" id = "user-page-avatarr">
-				{% endif %}
-        {% endif %}
+    {% if accounts %}
+    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+  {% else %}
+  {% if imagedata.image %}
+  <img src = "{{imagedata.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+  {% endif %}
+
+  {% endif %}
 
 
 
 
 
-				
 
-				<img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+
+
 
 
 				<h1 id = "user-page-username">{{owner.username}}</h1>
@@ -41,7 +44,7 @@
 
 
 									<a href="{% url 'add_pet' %}" class="btn btn-default btn-xs " type="button" >Add Pet</a>
-								
+
 				<div>
 									<button class="btn btn-default btn-xs dropdown-toggle " type="button" data-toggle="dropdown">Edit User
 										<span class="caret"></span></button>
@@ -50,12 +53,12 @@
 													<li><a href = "{% url 'add_info' %}"> Add a Status</a></li>
 													<li><a href="{% url 'add_image' %}">Add/Change profile picture</a></li>
 											</ul>
-											
-											
+
+
 								</div>
-								
-								
-								
+
+
+
 	{% else %}
 
 
@@ -194,8 +197,3 @@
 
 
 {% endblock %}
-
-
-
-
-
