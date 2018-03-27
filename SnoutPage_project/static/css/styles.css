@@ -256,7 +256,7 @@ img {
 }
 
 #index-post-pic{
-	height:30px;
+	height:50px;
 }
 
 #index-post-wrap{
@@ -265,16 +265,47 @@ img {
 }
 
 #post-comment-modal-body{
-	height:550px;
+	height:500px;
 	overflow:auto;
 }
 
 #post-body{
 	height:100%
+	overflow:auto;
 }
 
 #blue-panel{
 	background-color:skyblue;
+}
+
+#post-image{
+	height:450px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#category-list-panel{
+	height:350px;
+}
+
+#category{
+    transform: rotate(25deg);
+	border-left: solid black;
+	height:300px;
+}
+
+#category2{
+    transform: rotate(25deg);
+	height:300px;
+}
+
+#anti-rotate > a{
+	color:black;
+}
+	
+#anti-rotate{
+	transform: rotate(-25deg);
 }
 
 

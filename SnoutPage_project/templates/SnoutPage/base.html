@@ -30,13 +30,18 @@
 <nav class="navbar navbar-default navbar-fixed-top" id = "navbar-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a id = "logoLink"class="navbar-brand" href="{% url 'index' %}"><img class = "img-rounded" id = "logo" src="{% static "images/logo.png" %}" </a>
+	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a id = "logoLink"class="navbar-brand" href="{% url 'index' %}"><img class = "img-rounded" id = "logo" src="{% static "images/logo.png" %}"></a>
     </div>
-	<ul class="nav navbar-nav">
-      <li class="active"><a href="#">Categories</a></li>
+	<ul class= "nav navbar-nav collapse navbar-collapse"  id="myNavbar">
+      <li class="active"><a href="{% url 'category_list' %}">Categories</a></li>
 	</ul>
 
-    <form class="navbar-form navbar-left" action="/search">
+    <form class="navbar-form navbar-left collapse navbar-collapse"  id="myNavbar" action="/search">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" name="search">
         <div class="input-group-btn">
@@ -46,7 +51,7 @@
         </div>
       </div>
     </form>
-       <ul class="nav navbar-nav navbar-right">
+       <ul class="nav navbar-nav navbar-right collapse navbar-collapse"  id="myNavbar"
 
 
 		<li>
@@ -61,9 +66,7 @@
 
 
 		<li><a href = "{% url 'user_page' user.username %}">User Profile</a></li> <!-- Link to user profile-->
-		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Notifications</b> <span class="caret"></span></a> <!-- temp, might remove-->
-        </li>
+		
 		<li>
 			<a href ="{% url 'logout' %}">Logout</a> <!-- Link to Logout page-->
      </ul>
@@ -112,6 +115,9 @@
     </div>
   </div><!-- /.container-fluid -->
 </nav>
+
+
+
 </header>
 <body>
 {% endif %}

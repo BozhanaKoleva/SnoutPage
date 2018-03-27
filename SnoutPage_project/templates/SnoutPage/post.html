@@ -9,7 +9,7 @@
  <div class= "panel-heading">{{title}}</div>
   <div class="panel-body" id = "post-body">
     {% if image %}
-  <img src=  '{{image.url}}' style = "height:500px text-align:center;" alt = "Post image">
+  <img  class = "img-rounded" id ="post-image" src= '{{image.url}}' style = "text-align:center;" alt = "Post image">
   {% endif %}
   
   {% if description %}
