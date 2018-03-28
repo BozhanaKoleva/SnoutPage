@@ -49,11 +49,11 @@
 										<span class="caret"></span></button>
 											<ul class="dropdown-menu">
 												<li><a href="{% url 'edit_user' %}">Edit login details</a></li>
-													<li><a href = "{% url 'add_info' %}"> Add a Status</a></li>
-                          {% if imagedata.image %}
-                          {% else %}
-													<li><a href="{% url 'add_image' %}">Add/Change profile picture</a></li>
-                          {% endif %}
+										<li><a href = ""> Add a Status</a></li>
+				  						{% if imagedata.image and user.first_name  %}
+                                                    					<li><a href="{% url 'add_image' %}">Add/Change profile picture</a></li>
+                          							{% else %}
+										{% endif %}
 								
 											</ul>
 
