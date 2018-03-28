@@ -24,7 +24,7 @@ class UserProfileForm(forms.ModelForm):
 class FollowForm(forms.ModelForm):
     class Meta:
         model = Follow
-        fields = ('followed',)
+        fields = ()
 
 class PetForm(forms.ModelForm):
 ##   category = forms.ChoiceField(choices = TYPES, label="", initial='', widget=forms.Select(), )

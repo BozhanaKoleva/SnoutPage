@@ -359,8 +359,6 @@ def search(request):
 def user_page(request, username):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
-
-
     context_dict['imagedata']= show_user_image(request)
     owner = User.objects.get(username = username)
     context_dict['owner']=owner
@@ -371,6 +369,14 @@ def user_page(request, username):
             context_dict['authenticated'] = True
         else:
             context_dict['authenticated'] = False
+        try:
+            followed = Follow.objects.filter(user = owner, follower = user)
+            instance = Follow.objects.get(user = owner, follower = user)
+            print ('object found')
+            
+        except:
+            followed = False
+            print ('object not found')
 
         pets = Pet.objects.filter(owner=owner)
         pet_number = pets.count()
@@ -378,22 +384,45 @@ def user_page(request, username):
         context_dict['pets'] = pets
         context_dict['userdata'] = userdata
         context_dict['user']=user
-        form= FollowForm()
-        context_dict['form'] = form
-        if form.is_valid():
-            follow = form.save(commit=False)
-            follow.user = owner
-            follow.follower = user
-            follow.save
+        if followed:
+            
+            form = FollowForm(instance=instance)
+            print ('using found instance')
+            context_dict['followed'] = instance.followed
+            
+        else:
+            print ('using form')
+            form = FollowForm()
+            context_dict['followed'] = False
+            print ('using form')
+            
+        
+        if request.method=='POST' and 'follow' in request.POST:
+            print ('follow request')
+            f = form.save(commit=False)
+            f.followed = True
+            f.user = owner
+            f.follower = request.user
+            f.save()
+            print ('followed')
             return HttpResponseRedirect('/')
-            #return render(request, 'SnoutPage/user_page.html',context_dict)
         else:
             print(form.errors)
-
+        if request.method=='POST' and 'unfollow' in request.POST:
+            follow = form.save(commit=False)
+            follow.user = owner
+            follow.follower = request.user
+            follow.followed = False
+            follow.save()
+            print ('unfollowed')
+            return HttpResponseRedirect('/')
+        else:
+            print(form.errors)
+        print ('something seems to be working')        
     except:
         print ('didnt work')
 
-
+    context_dict['form'] = form
     return render(request, 'SnoutPage/user_page.html',context_dict)
 
 

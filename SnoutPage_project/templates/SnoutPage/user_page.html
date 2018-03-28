@@ -65,7 +65,19 @@
 
 	{% else %}
 
-
+												<div>
+							{% if not followed %}
+							<form method='POST'>
+							{{form.as_p}}
+							<button type="submit"  name="follow">follow</button>		
+							</form>
+							{% else %}
+							<form method='POST'>
+							{{form.as_p}}
+							<button type="submit"  name="unfollow">unfollow</button>		
+							</form>
+							{% endif %}
+							</div>
 			    <!-- --------------------- Else: ---------------------- -->
 
 				 <!-- --------------------- If already friends: -->
