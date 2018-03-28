@@ -10,34 +10,46 @@ def populate():
 
     ## testing: marley and max would be two pets, and would have these posts assigned to them
     Marley_post =[
-    {"title":"dog","description":"it's a dog","views":5,"category":"dog"},
-    {"title":"dog2","description":"it's the same dog","views":10,"category":"dog"}
+    {"title":"dog",
+     "description":"it's a dog",
+     "picture":"post_images/Dog_CTA_Desktop_HeroImage.jpg",
+     "Category":"dog",},
+
+    {"title":"do2",
+     "description":"it's the same dog",
+     "picture":"post_images/download.jpg",
+     "Category":"dog",}
     ]
 
     max_post = [
-    {"title":"cat", "description":"i'ts a cat","views":10, "category" :"cat"},
+    {"title":"cat",
+     "description":"i'ts a cat",
+     "picture":"post_images/ca1.jpg.jpg",
+     "Category":"dog",
+     },
     ]
+
+
     pets = {"dog":{"posts":Marley_post},
         "cat": {"posts":max_post}}
 
     for cat, cat_data in pets.items():
-        # c = add_cat(cat)
-        # Updated the population script to pass through the specific values for views and likes
-        print "cat:"+  cat
+
         c = add_pet(cat)
         for p in cat_data["posts"]:
-            add_post(c, p["title"], p["views"],p["description"],p["category"])
+            add_post(c, p["title"],p["description"], p["picture"], p["Category"])
 
 
-def add_post(cat, title, views,description,category):
-    print "category:" + category
-    p = Post.objects.get_or_create( title=title)[0]
-    p.views=views
+def add_post(pets, title, description, picture, Category):
+
+    p = Post.objects.get_or_create( title=title, pet=pets)[0]
+
     p.tile =title
     p.description =description
+    p.picture = picture
 
 
-    #p.category= Category.objects.get_or_create(name = category)
+    p.Category= Category
 
 
     p.save()
@@ -45,9 +57,9 @@ def add_post(cat, title, views,description,category):
 
 
 def add_pet(name):
-    c = Pet.objects.get_or_create(name=name)[0]
-    c.save()
-    return c
+    a = Pet.objects.get_or_create(name=name)[0]
+    a.save()
+    return a
 
 
 if __name__ == '__main__':
