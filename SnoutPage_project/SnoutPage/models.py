@@ -113,7 +113,7 @@ class ImageTest(models.Model):
 
 class Follow (models.Model):
    followed =  models.BooleanField(default=False)
-   user = models.ForeignKey(User,  related_name='user')
+   person = models.ForeignKey(User,  related_name='user')
    follower = models.ForeignKey(User,  related_name='follower')
    def __str__(self):
       return self.user

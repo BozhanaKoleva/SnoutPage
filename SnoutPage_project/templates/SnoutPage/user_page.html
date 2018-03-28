@@ -15,24 +15,22 @@
 		<div id="blue-panel" class="panel-body">
 			<div class="col-sm-5" style="background-color:skyblue;" id = "user-page-top-content">
 	<div  id = "user-page-top-content" class = "well well-sm">
-    {% load account %}
-  {% if user.username == owner.username and accounts %} <!-- check if person viewing page is owner, and if so serve them their profile picture from fb -->
-      <img src="{{owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture1" >
-
-  {%else%}
-
-  {%if owner.first_name %}
-
-
-        <img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+    {% if accounts %}
+    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
   {% else %}
-  {% for i in imagedata %}
-    {% if i.user == owner %}
-      <img src = "{{i.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
-    {% endif %}
-  {% endfor %}                    <!-- person is viewing another person's page - show them owner's profile picture -->
-    {%endif%}
-    {%endif%}
+  {% if imagedata.image %}
+  <img src = "{{imagedata.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+  {% endif %}
+
+  {% endif %}
+
+
+			
+					
+
+
+
+
 
 				<h1 id = "user-page-username">{{owner.username}}</h1>
 
@@ -56,7 +54,7 @@
                           {% else %}
 													<li><a href="{% url 'add_image' %}">Add/Change profile picture</a></li>
                           {% endif %}
-
+								
 											</ul>
 
 
@@ -70,26 +68,21 @@
 							{% if not followed %}
 							<form method='POST'>
 							{{form.as_p}}
-<<<<<<< HEAD
-							<button type="submit"  name="follow" class="btn btn-success	 btn-xs"> follow</button>		
-=======
-							<button type="submit"  name="follow">follow</button>
->>>>>>> 1179c85139b10a0ea62e8b097642ec57c4ec502e
+							<button type="submit"  name="follow">follow</button>		
 							</form>
 							{% else %}
 							<form method='POST'>
 							{{form.as_p}}
-<<<<<<< HEAD
-							<button type="submit"  name="unfollow" class="btn btn-danger  btn-xs">unfollow</button>		
-=======
-							<button type="submit"  name="unfollow">unfollow</button>
->>>>>>> 1179c85139b10a0ea62e8b097642ec57c4ec502e
+							<button type="submit"  name="unfollow">unfollow</button>		
 							</form>
 							{% endif %}
 							</div>
-			  
+			    <!-- --------------------- Else: ---------------------- -->
 
-				
+				 <!-- --------------------- If already friends: -->
+								<a href="#removefriend" class="btn btn-danger  btn-xs"> Remove Friend</a>
+				  <!-- --------------------- Else: Display add/remove friend button. -->
+								<a href="#addfriend" class="btn btn-success	 btn-xs"> Add Friend</a>
 {% endif %}
 				</div>
 
@@ -101,7 +94,7 @@
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#Description">{{user.username}}'s status posts</a></li>
-    <li><a data-toggle="tab" href="#Friends">Following<span class="badge"> {{followers.count}} </span></a></li> <!-- ----------------------- Number of friends -->
+    <li><a data-toggle="tab" href="#Friends">Friend list <span class="badge"> Number of friends </span></a></li> <!-- ----------------------- Number of friends -->
   </ul>
 
   <div class="tab-content" >
@@ -118,6 +111,24 @@
 
 	<!-- -----------------------------------------------------------------------User Description -->
 
+
+
+					<div>
+					{% if followlist %}
+					{% for person in followlist %}
+					<a href="{% url 'user_page' person.username %}">{{person.username}}</a>
+					{% endfor %}
+					{% else %}
+					<strong>{{owner.username}} is not following anyone.</strong>
+					{% endif %}
+					</div>
+
+
+
+
+
+
+
   </blockquote>
   </div>
 	</div>
@@ -125,26 +136,24 @@
     </div>
     <div id="Friends" class="tab-pane fade" id = "friends-tab">
 
-{% if followers %}
-   <div class="list-group">
-    <div class="panel panel-default">
-          <div class="panel-body scrollable-panel">
-  
-	 {% for user in followers %}
-   
-   
+  <div class="list-group">
 
-			 <a href="{% url 'user_page' user.username %}" class="list-group-item text-left"> <!-- ----------------------------------------------------------------------- Link to users page -->
-		{% if follower.imagedata.image.url %}
-		<img src = "{{user.imagedata.image.url}}" class = "img-thumbnail" id="search-user-img">			<!-- ------------------------------------------------------user image --> 
-		{% else %}
-        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png"> 
-		{% endif %}
-        <label>
-            {{follower.username}}<br> <!-- ----------------------------------------------------------------------- followee name -->
+	 <div class="panel panel-primary">
+          <div class="panel-body scrollable-panel">
+
+
+			 <a href="#LinkToFriendsPage" class="list-group-item text-left"> <!-- ----------------------------------------------------------------------- Link to friends page -->
+        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png"> <!-- ------------------------------------------------------Image of friend -->
+
+        <label class="name">
+            Friend name<br> <!-- ----------------------------------------------------------------------- Friends name -->
+        </label>
+
+        <label class="pull-right">
+            <a id = "friend-list-buttons" class="btn btn-danger  btn-xs glyphicon glyphicon-remove" href="#" title="Delete"></a>  <!-- ---------------- remove friend -->
         </label>
 		</a>
-{% endfor %}
+
 
 
 
@@ -153,10 +162,6 @@
           </div> <!-- End of Scrollable panel -->
         </div>
    </div>
-   
-     {% else %}
-	 <strong>You do not follow anyone.</strong>
-	 {% endif %}
 	</div>
     </div>
 
