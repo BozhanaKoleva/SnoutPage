@@ -63,8 +63,8 @@
       {% if accounts %}
       <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}"  class="img-rounded" id = "userAvatar">
       {% else %}
-      {% if imagedata.image %}
-      <img src = "{{imagedata.image.url}}"class="img-thumbnail"  class="img-rounded" id = "userAvatar">
+      {% if userimage.image %}
+      <img src = "{{userimage.image.url}}"class="img-thumbnail"  class="img-rounded" id = "userAvatar">
       {% endif %}
       {% endif %}
 

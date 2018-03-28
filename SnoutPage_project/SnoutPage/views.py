@@ -28,7 +28,7 @@ def index(request):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     posts = Post.objects.all()
     context_dict['posts'] = posts
     return render(request, 'SnoutPage/index.html', context_dict)
@@ -113,7 +113,7 @@ def show_category(request, category_name_slug):
     # to the template rendering engine.
     context_dict = {}
     query=request.GET.get('search')
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
 
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -136,7 +136,7 @@ def pet(request, pet_name_slug):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
         posts = Post.objects.filter(pet=pet)
@@ -182,7 +182,7 @@ def post_category (request, category):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     posts = Post.objects.filter(category=category)
     context_dict ['posts'] = posts
     return render(request, 'SnoutPage/post_category.html', context_dict)
@@ -192,7 +192,7 @@ def post(request, post_title_slug):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     form = PostLikeForm()
     context_dict['form'] = form
     try:
@@ -264,7 +264,7 @@ def add_pet(request):
     context_dict={}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     form = PetForm()
     if request.method == 'POST':
         form = PetForm(request.POST,request.FILES)
@@ -284,7 +284,7 @@ def add_comment(request, post_title_slug):
     context_dict={}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     try:
         post = Post.objects.get(slug=post_title_slug)
     except Post.DoesNotExist:
@@ -310,7 +310,7 @@ def add_post(request, pet_name_slug):
     context_dict={}
     userdata = AdditonalUserData.objects.all
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:
@@ -340,6 +340,8 @@ def add_post(request, pet_name_slug):
     return render(request, 'SnoutPage/add_post.html', context_dict)
 
 def search(request):
+    context_dict={}
+    context_dict['userimage'] =  show_user_image(request)
     user_list = User.objects.all()
     post_list = Post.objects.all()
     query = request.GET.get('search')
@@ -350,8 +352,10 @@ def search(request):
     else:
         post_list = []
         user_list = []
-    context_dict = {'posts': post_list, 'query':query, 'users' :user_list}
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['posts']= post_list
+    context_dict['query']=query
+    context_dict['users'] =user_list
+    context_dict['imagedata'] = ImageTest.objects.all
     return render(request, 'SnoutPage/search.html', context=context_dict)
 
 
@@ -359,7 +363,8 @@ def search(request):
 def user_page(request, username):
     context_dict = {}
     userdata = AdditonalUserData.objects.all
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['imagedata'] = ImageTest.objects.all
+    context_dict['userimage'] =  show_user_image(request)
     owner = User.objects.get(username = username)
     context_dict['owner']=owner
     try:
@@ -373,7 +378,7 @@ def user_page(request, username):
             followed = Follow.objects.filter(user = owner, follower = user)
             instance = Follow.objects.get(user = owner, follower = user)
             print ('object found')
-            
+
         except:
             followed = False
             print ('object not found')
@@ -385,18 +390,18 @@ def user_page(request, username):
         context_dict['userdata'] = userdata
         context_dict['user']=user
         if followed:
-            
+
             form = FollowForm(instance=instance)
             print ('using found instance')
             context_dict['followed'] = instance.followed
-            
+
         else:
             print ('using form')
             form = FollowForm()
             context_dict['followed'] = False
             print ('using form')
-            
-        
+
+
         if request.method=='POST' and 'follow' in request.POST:
             print ('follow request')
             f = form.save(commit=False)
@@ -418,7 +423,7 @@ def user_page(request, username):
             return HttpResponseRedirect('/')
         else:
             print(form.errors)
-        print ('something seems to be working')        
+        print ('something seems to be working')
     except:
         print ('didnt work')
 
@@ -432,7 +437,7 @@ def edit_pet(request, pet_name_slug):
     context_dict={}
     form = PetForm()
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     try:
         pet = Pet.objects.get(slug=pet_name_slug)
     except Pet.DoesNotExist:
@@ -479,7 +484,7 @@ def edit_user(request):
     context_dict={}
 
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     if request.method=='POST':
         form = PasswordChangeForm(request.POST,instance =request.user)
         if form.is_valid():
@@ -494,7 +499,7 @@ def add_info(request):
 #def description(self, request):
     context_dict={}
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     #if request.method =='POST':
     form= EditOtherDetails(request.POST)
     context_dict ={'form':form}
@@ -522,7 +527,7 @@ def add_info(request):
 def change_password(request):
     context_dict={}
 
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     if request.method=='POST':
         form = PasswordChangeForm(data=request.POST,user =request.user)
         if form.is_valid():
@@ -552,7 +557,7 @@ def add_image(request): ## view saves
         form = ImageForm
 
     context_dict ={}
-
+    context_dict['userimage'] =  show_user_image(request)
     try:
         imagedata = ImageTest.objects.get(user =request.user)
         context_dict['imagedata']=imagedata
@@ -566,7 +571,7 @@ def add_image(request): ## view saves
 
 def show_post(request, post_title_slug):
     context_dict = {}
-    context_dict['imagedata']= show_user_image(request)
+    context_dict['userimage'] =  show_user_image(request)
     try:
         post = Post.objects.get(slug=post_title_slug)
         context_dict['post'] = post

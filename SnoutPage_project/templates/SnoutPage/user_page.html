@@ -15,14 +15,24 @@
 		<div id="blue-panel" class="panel-body">
 			<div class="col-sm-5" style="background-color:skyblue;" id = "user-page-top-content">
 	<div  id = "user-page-top-content" class = "well well-sm">
-    {% if accounts %}
-    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
-  {% else %}
-  {% if imagedata.image %}
-  <img src = "{{imagedata.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
-  {% endif %}
+    {% load account %}
+  {% if user.username == owner.username and accounts %} <!-- check if person viewing page is owner, and if so serve them their profile picture from fb -->
+      <img src="{{owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture1" >
 
-  {% endif %}
+  {%else%}
+
+  {%if owner.first_name %}
+
+
+        <img src="{{ owner.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+  {% else %}
+  {% for i in imagedata %}
+    {% if i.user == owner %}
+      <img src = "{{i.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+    {% endif %}
+  {% endfor %}                    <!-- person is viewing another person's page - show them owner's profile picture -->
+    {%endif%}
+    {%endif%}
 
 
 
@@ -55,7 +65,7 @@
                           {% else %}
 													<li><a href="{% url 'add_image' %}">Add/Change profile picture</a></li>
                           {% endif %}
-								
+
 											</ul>
 
 
@@ -69,12 +79,12 @@
 							{% if not followed %}
 							<form method='POST'>
 							{{form.as_p}}
-							<button type="submit"  name="follow">follow</button>		
+							<button type="submit"  name="follow">follow</button>
 							</form>
 							{% else %}
 							<form method='POST'>
 							{{form.as_p}}
-							<button type="submit"  name="unfollow">unfollow</button>		
+							<button type="submit"  name="unfollow">unfollow</button>
 							</form>
 							{% endif %}
 							</div>
