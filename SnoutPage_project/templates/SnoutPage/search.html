@@ -10,15 +10,15 @@
   Show results in: <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#posts">Posts</a></li>
   <li><a data-toggle="tab" href="#users">Users</a></li>
-  
+
 </ul></div>
 
   <div class="panel-body">
- 
+
   <div class="tab-content" style="height:69vh;">
   <div id="posts" class="tab-pane fade in active">
-     
-	
+
+
 	{% if posts %}
 
 
@@ -45,12 +45,12 @@
   </div>
   <div class="panel-footer">Posted on {{ post.created_date}} from <a href="{% url 'user_page' post.author.username %}">{{post.author.username}}</a> 's
 
- <a href="{% url 'post_category' post.category %}">{{post.category}}</a> - <a href="{% url 'pet' post.pet.slug %}">{{post.pet.name}}</a> 
+ <a href="{% url 'post_category' post.category %}">{{post.category}}</a> - <a href="{% url 'pet' post.pet.slug %}">{{post.pet.name}}</a>
 
- 
+
  </div>
 </div>
-  
+
 
         {% endfor %}
 		</div>
@@ -59,36 +59,39 @@
     {% else %}
     <strong>No posts found that match the query.</strong><br/>
     {% endif %}
-	  
+
   </div>
-  
-  
-  
-  
+
+
+
+
   <div id="users" class="tab-pane fade">
   {% if users %}
    <div class="list-group">
     <div class="panel panel-default">
           <div style= "height:70vh;" class="panel-body scrollable-panel">
-  
-	 {% for user in users %}
-   
-   
 
-	
+            {% for user in users %}
 
+       			 <a href="{% url 'user_page' user.username %}" class="list-group-item text-left">
+                    {% for i in imagedata %}
 
-			 <a href="{% url 'user_page' user.username %}" class="list-group-item text-left"> <!-- ----------------------------------------------------------------------- Link to users page -->
-		{% if user.imagedata.image.url %}
-		<img src = "{{user.imagedata.image.url}}" class = "img-thumbnail" id="search-user-img">			<!-- ------------------------------------------------------user image --> 
-		{% else %}
-        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png"> 
-		{% endif %}
-        <label>
-            {{user.username}}<br> <!-- ----------------------------------------------------------------------- Friends name -->
-        </label>
-		</a>
-{% endfor %}
+                       {% if i.user == user %}
+                         {% if i.image %}
+                           <img src = "{{i.image.url}}"class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture1" >
+                         {% endif %}
+                       {% endif %}
+                   {% endfor %}
+                       {%if user.first_name %}
+                           <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-thumbnail" id = "user-page-avatarr" alt ="Profile Picture" >
+
+                       {%endif %}
+
+               <label>
+                   {{user.username}}<br> <!-- ----------------------------------------------------------------------- Friends name -->
+               </label>
+       		</a>
+       {% endfor %}
 
 
 
@@ -97,18 +100,18 @@
           </div> <!-- End of Scrollable panel -->
         </div>
    </div>
-   
+
      {% else %}
 	 <strong>No users found that match the query.</strong>
 	 {% endif %}
-   
+
   </div>
-  
+
 </div>
 
 
 
 	  </div>
 </div>
-	  
+
 {% endblock %}

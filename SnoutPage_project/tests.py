@@ -24,8 +24,16 @@ class ModelTests(TestCase):
         self.user.save()
         self.assertEqual(self.user.username == 'testuser', True)
 
+<<<<<<< HEAD
     def test_add_pet(self):
 
         self.Pet = Pet.objects.create(name='Testanimal', description='Testdescription', category='DOG', picture=None)
         self.Pet.save()
         self.assertEqual(self.Pet.name=='Testanimal', self.Pet.description=='Testdescription',self.Pet.category=='DOG', True)
+=======
+#    def test_add_pet(self):
+#
+#        self.Pet = Pet.objects.create(name='Testanimal', description='Testdescription', category='DOG', picture=None)
+#        self.Pet.save()
+#        self.assertEqual(self.Pet.name=='Testanimal', self.Pet.description=='Testdescription',self.Pet.category=='DOG', True)
+>>>>>>> 1179c85139b10a0ea62e8b097642ec57c4ec502e
